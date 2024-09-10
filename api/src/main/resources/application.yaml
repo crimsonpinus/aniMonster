@@ -1,0 +1,52 @@
+spring:
+  threads:
+    virtual:
+      enabled: true
+
+  jpa:
+    show-sql: true
+    properties:
+      format_sql: true
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate:
+        use_sql_comments: true
+      ddl-auto: validate
+  datasource:
+    url: jdbc:postgresql://moonsh.kr:2345/animon
+    driver-class-name: org.postgresql.Driver
+    username: animon
+    password: animon12321
+#    url: ${SPRING_DATASOURCE_URL}
+#    driver-class-name: org.postgresql.Driver
+#    username: ${SPRING_DATASOURCE_USERNAME}
+#    password: ${SPRING_DATASOURCE_PASSWORD}
+encrypt:
+#  salt: ${POSTGRES_ENCRYPT_SALT}
+#  password: ${POSTGRES_ENCRYPT_PASS}
+  algorithm: aes
+  secretKey: AniMonsterBemine
+
+  naverSecretKey: ncp_iam_BPKMKRC8my9RwXz8x4XpJkDqRl0ramzmzf
+  naverAccessKey: ncp_iam_BPAMKR3jRhvJP2DGrP9M
+  naverSMSApi: ncp:sms:kr:337692680951:animonster
+
+
+token:
+  secret:
+    key: AnimonsterInBmineAISecretKey123!@#
+  access-token:
+    plus-hour: 1
+  refresh-token:
+    plus-hour: 12
+
+
+server:
+  servlet:
+    encoding:
+      force-response: true
+  port: 7077
+
+
+
+
+  #mongodb://moonsh.kr:27071/animon?authSource=admin

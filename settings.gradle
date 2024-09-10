@@ -1,0 +1,5 @@
+rootProject.name = 'aniMonster'
+include 'api'
+include 'business'
+include 'postgresql'
+
