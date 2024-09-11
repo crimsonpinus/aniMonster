@@ -26,12 +26,12 @@ encrypt:
   algorithm: aes
   secretKey: AniMonsterBemine
 
-  naverSecretKey: ncp_iam_BPKMKRC8my9RwXz8x4XpJkDqRl0ramzmzf
-  naverAccessKey: ncp_iam_BPAMKR3jRhvJP2DGrP9M
-  naverSMSApi: ncp:sms:kr:337692680951:animonster
+#  naverSecretKey: ncp_iam_BPKMKRC8my9RwXz8x4XpJkDqRl0ramzmzf
+#  naverAccessKey: ncp_iam_BPAMKR3jRhvJP2DGrP9M
+#  naverSMSApi: ncp:sms:kr:337692680951:animonster
+#
 
-
-token:
+jwt:
   secret:
     key: AnimonsterInBmineAISecretKey123!@#
   access-token:

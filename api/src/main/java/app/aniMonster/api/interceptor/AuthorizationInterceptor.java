@@ -17,6 +17,8 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import java.util.Objects;
 
+//public class AuthorizationInterceptor{
+//}
 @Slf4j
 @RequiredArgsConstructor
 @Component

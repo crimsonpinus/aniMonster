@@ -1,9 +1,8 @@
-package app.aniMonster.business.logic.token.helper;
+package app.aniMonster.business.logic.jwt.helper;
 
 import app.aniMonster.business.common.error.TokenBusinessErrorCode;
 import app.aniMonster.business.common.exception.BusinessException;
-import app.aniMonster.business.logic.token.ifs.TokenHelperIfs;
-import app.aniMonster.business.logic.token.model.TokenDto;
+import app.aniMonster.business.logic.jwt.model.TokenModel;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class JwtTokenHelper implements TokenHelperIfs {
+public class TokenHelper implements TokenHelperIfs{
     @Value("${jwt.secret.key}")
     private String secretKey;
 
@@ -29,53 +28,14 @@ public class JwtTokenHelper implements TokenHelperIfs {
     @Value("${jwt.refresh-token.plus-hour}")
     private Long refreshTokenHour;
 
-
     @Override
-    public TokenDto issueAccessToken(Map<String, Object> data) {
-        var expiredLocalDateTime = LocalDateTime.now().plusHours(accessTokenHour);
-
-        var expireAt = Date.from(
-                expiredLocalDateTime.atZone(
-                        ZoneId.systemDefault()
-                ).toInstant()
-        );
-
-        var key = Keys.hmacShaKeyFor(secretKey.getBytes());
-
-        var jwtToken = Jwts.builder()
-                .signWith(key, SignatureAlgorithm.HS256)
-                .setClaims(data)
-                .setExpiration(expireAt)
-                .compact();
-
-        return TokenDto.builder()
-                .token(jwtToken)
-                .expiresAt(expiredLocalDateTime)
-                .build();
+    public TokenModel issueAccessToken(Map<String, Object> data) {
+        return makeToken(data, accessTokenHour);
     }
 
     @Override
-    public TokenDto issueRefreshToken(Map<String, Object> data) {
-        var expiredLocalDateTime = LocalDateTime.now().plusHours(refreshTokenHour);
-
-        var expireAt = Date.from(
-                expiredLocalDateTime.atZone(
-                        ZoneId.systemDefault()
-                ).toInstant()
-        );
-
-        var key = Keys.hmacShaKeyFor(secretKey.getBytes());
-
-        var jwtToken = Jwts.builder()
-                .signWith(key, SignatureAlgorithm.HS256)
-                .setClaims(data)
-                .setExpiration(expireAt)
-                .compact();
-
-        return TokenDto.builder()
-                .token(jwtToken)
-                .expiresAt(expiredLocalDateTime)
-                .build();
+    public TokenModel issueRefreshToken(Map<String, Object> data) {
+        return makeToken(data, refreshTokenHour);
     }
 
     @Override
@@ -98,4 +58,28 @@ public class JwtTokenHelper implements TokenHelperIfs {
             }
         }
     }
+
+    public TokenModel makeToken(Map<String, Object> data, Long tokenHour){
+        var expiredLocalDateTime = LocalDateTime.now()
+                .plusHours(tokenHour);
+
+        var expireAt = Date.from(
+                expiredLocalDateTime.atZone(
+                        ZoneId.systemDefault()
+                ).toInstant()
+        );
+        var key = Keys.hmacShaKeyFor(secretKey.getBytes());
+
+        var jwtToken = Jwts.builder()
+                .signWith(key, SignatureAlgorithm.HS256)
+                .setClaims(data)
+                .setExpiration(expireAt)
+                .compact();
+        return TokenModel.builder()
+                .token(jwtToken)
+                .expiresAt(expiredLocalDateTime)
+                .build();
+
+    }
 }
+
