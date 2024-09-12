@@ -4,9 +4,11 @@ import app.aniMonster.business.common.annotation.Converter;
 import app.aniMonster.business.common.error.BusinessErrorCode;
 import app.aniMonster.business.common.exception.BusinessException;
 import app.aniMonster.business.domain.social.model.SocialResponse;
+import app.aniMonster.business.domain.social.model.SocialSignResponse;
 import app.aniMonster.business.domain.social.model.SocialSignRequest;
 import app.aniMonster.business.logic.encrypt.DbEncryptUtil;
 import app.aniMonster.postgresql.db.social.entity.SocialEntity;
+import app.aniMonster.postgresql.db.social.enums.SocialIsAdult;
 import app.aniMonster.postgresql.db.social.enums.SocialStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +31,32 @@ public class SocialConverter {
                             .name(encryptUtil.encryptEncode(it.getName()))
                             .email(encryptUtil.encryptEncode(it.getEmail()))
                             .provider(it.getProvider())
-                            .status(String.valueOf(SocialStatus.REGISTERED))
+                            .status(SocialStatus.REGISTERED)
+                            .isAdult(SocialIsAdult.UNREGISTERED)
                             .registeredAt(Instant.now())
                             .build();
                 })
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social sign up failed"));
+    }
+
+    public SocialEntity toEntity(String id){
+        return Optional.ofNullable(id)
+                .map(it -> {
+                    return SocialEntity.builder()
+                            .socialId(encryptUtil.encryptEncode(it))
+                            .build();
+                })
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social sign up failed"));
+    }
+
+    public SocialSignResponse toSignResponse(SocialEntity socialEntity){
+        return Optional.ofNullable(socialEntity)
+                .map(it ->{
+                    return SocialSignResponse.builder()
+                            .socialId(encryptUtil.encryptDecode(it.getSocialId()))
+                            .build();
+                })
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social Data Null"));
     }
 
     public SocialResponse toResponse(SocialEntity socialEntity){
@@ -43,9 +66,13 @@ public class SocialConverter {
                             .socialId(encryptUtil.encryptDecode(it.getSocialId()))
                             .name(encryptUtil.encryptDecode(it.getName()))
                             .email(encryptUtil.encryptDecode(it.getEmail()))
+                            .nick(it.getNick())
+                            .provider(it.getProvider())
+                            .status(it.getStatus())
                             .isAdult(it.getIsAdult())
+                            .registeredAt(it.getRegisteredAt())
                             .build();
                 })
-                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social Data Null"));
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social User Null"));
     }
 }

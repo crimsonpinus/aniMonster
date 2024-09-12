@@ -18,21 +18,21 @@ public class UsersPreRegOpenApiController {
 
     private final UsersPreRegBusiness usersPreRegBusiness;
 
-    @PostMapping("/register")
-    public Api<UsersPreRegResponse> register(
-            @Valid
-            @RequestBody Api<UsersPreRegRequest> request
-    ){
-        var response = usersPreRegBusiness.register(request.getBody());
-        return Api.OK(response);
-    }
-
-    @PostMapping("/mobile")
-    public Api<UsersPreRegResponse> mobile(
-            @Valid
-            @RequestBody Api<String> request
-    ){
-        var response = usersPreRegBusiness.findByMobile(request.getBody());
-        return Api.OK(response);
-    }
+//    @PostMapping("/register")
+//    public Api<UsersPreRegResponse> register(
+//            @Valid
+//            @RequestBody Api<UsersPreRegRequest> request
+//    ){
+//        var response = usersPreRegBusiness.register(request.getBody());
+//        return Api.OK(response);
+//    }
+//
+//    @PostMapping("/mobile")
+//    public Api<UsersPreRegResponse> mobile(
+//            @Valid
+//            @RequestBody Api<String> request
+//    ){
+//        var response = usersPreRegBusiness.findByMobile(request.getBody());
+//        return Api.OK(response);
+//    }
 }

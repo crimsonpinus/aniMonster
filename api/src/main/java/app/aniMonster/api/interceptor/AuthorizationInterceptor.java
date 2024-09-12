@@ -3,6 +3,8 @@ package app.aniMonster.api.interceptor;
 import app.aniMonster.api.common.error.ErrorCode;
 import app.aniMonster.api.common.error.TokenErrorCode;
 import app.aniMonster.api.common.exception.ApiException;
+import app.aniMonster.business.domain.social.business.SocialBusiness;
+import app.aniMonster.business.logic.jwt.business.JwtBusiness;
 import app.aniMonster.business.logic.token.business.TokenBusiness;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,7 +26,7 @@ import java.util.Objects;
 @Component
 public class AuthorizationInterceptor implements HandlerInterceptor {
 
-    private final TokenBusiness tokenBusiness;
+    private final JwtBusiness jwtBusiness;
 
     @Override
     public boolean preHandle(
@@ -52,11 +54,21 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             throw new ApiException(TokenErrorCode.AUTHORIZATION_TOKEN_NOT_FOUND);
         }
 
-        var userId = tokenBusiness.validationAccessToken(accessToken);
-
-        if (userId != null) {
+        var socialId = jwtBusiness.validateToken(accessToken);
+        log.info("social id ---", socialId);
+        System.out.println("social id ---"+ socialId);
+        if (socialId != null) {
             var requestContext = Objects.requireNonNull(RequestContextHolder.getRequestAttributes());
-            requestContext.setAttribute("userId" , userId, RequestAttributes.SCOPE_REQUEST);
+            //어디서나 아래의 형식을 사용하여 호출하여 사용 가능
+            //ex
+//            var requestContext = Objects.requireNonNull(
+//                    RequestContextHolder.getRequestAttributes()
+//            );
+//            var socialId = requestContext.getAttribute("socialId", RequestAttributes.SCOPE_REQUEST);
+
+
+            requestContext.setAttribute("socialId" , socialId, RequestAttributes.SCOPE_REQUEST);
+            System.out.println("social id ---end" );
             return true;
         }
 

@@ -1,9 +1,13 @@
 package app.aniMonster.business.domain.social.model;
 
+import app.aniMonster.postgresql.db.social.enums.SocialIsAdult;
+import app.aniMonster.postgresql.db.social.enums.SocialStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.Instant;
 
 @Data
 @AllArgsConstructor
@@ -17,5 +21,14 @@ public class SocialResponse {
 
     private String email;
 
-    private String isAdult;
+    private String nick;
+
+    private String provider;
+
+    private SocialStatus status;
+
+    private SocialIsAdult isAdult;
+
+    private Instant registeredAt;
+
 }

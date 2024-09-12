@@ -7,7 +7,6 @@ import app.aniMonster.business.domain.social.model.SocialSignRequest;
 import app.aniMonster.business.domain.social.service.SocialService;
 import app.aniMonster.business.logic.jwt.business.JwtBusiness;
 import app.aniMonster.business.logic.jwt.model.JwtResponse;
-import app.aniMonster.business.logic.token.business.TokenBusiness;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,8 +22,13 @@ public class SocialBusiness {
     public JwtResponse sign(SocialSignRequest request) {
         var entity = socialConverter.toEntity(request);
         var usedEntity = socialService.sign(entity);
-        var response = socialConverter.toResponse(usedEntity);
+        var response = socialConverter.toSignResponse(usedEntity);
         return jwtBusiness.issueToken(response);
     }
 
+    public SocialResponse findMe(String id) {
+        var entity = socialConverter.toEntity(id);
+        var usedEntity = socialService.findMe(entity);
+        return socialConverter.toResponse(usedEntity);
+    }
 }

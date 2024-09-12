@@ -34,8 +34,8 @@ public class SocialService {
                 })
                 .orElseGet(() -> {
                     socialEntity.setRegisteredAt(Instant.now());
-                    socialEntity.setStatus(String.valueOf(SocialStatus.REGISTERED));
-                    socialEntity.setIsAdult(String.valueOf(SocialIsAdult.UNREGISTERED));
+                    socialEntity.setStatus(SocialStatus.REGISTERED);
+                    socialEntity.setIsAdult(SocialIsAdult.UNREGISTERED);
                     return socialRepository.save(socialEntity);
                 });
 //        return Optional.ofNullable(socialEntity)
@@ -52,5 +52,12 @@ public class SocialService {
 //                    return socialRepository.save(it);
 //                })
 //                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social Entity Null"));
+    }
+
+    @Transactional
+    public SocialEntity findMe(SocialEntity socialEntity) {
+        System.out.println("Social Service findme "+socialEntity.getSocialId());
+        return socialRepository.findFirstBySocialIdAndStatusOrderBySocialIdDesc(socialEntity.getSocialId(), SocialStatus.REGISTERED)
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.BAD_REQUEST,"Not Found Social User"));
     }
 }

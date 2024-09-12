@@ -1,6 +1,7 @@
 package app.aniMonster.api.config.web;
 
 import app.aniMonster.api.interceptor.AuthorizationInterceptor;
+import app.aniMonster.business.resolver.SocialSessionResolver;
 import app.aniMonster.business.resolver.UserSessionResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
     private final AuthorizationInterceptor authorizationInterceptor;
 
     private final UserSessionResolver userSessionResolver;
+
+    private final SocialSessionResolver socialSessionResolver;
 
     //인증하지 않을 url
     private List<String> OPEN_API = List.of(
@@ -49,5 +52,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(userSessionResolver);
+        resolvers.add(socialSessionResolver);
     }
 }

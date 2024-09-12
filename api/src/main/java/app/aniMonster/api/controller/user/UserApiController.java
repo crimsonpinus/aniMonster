@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 public class UserApiController {
 
-    private final UserBusiness userBusiness;
-
-    @GetMapping("/me")
-    public Api<UserResponse> me(
-            @UserSession User user
-    ){
-
-        var response = userBusiness.me(user.getId());
-
-        return Api.OK(response);
-    }
+//    private final UserBusiness userBusiness;
+//
+//    @GetMapping("/me")
+//    public Api<UserResponse> me(
+//            @UserSession User user
+//    ){
+//
+//        var response = userBusiness.me(user.getId());
+//
+//        return Api.OK(response);
+//    }
 }

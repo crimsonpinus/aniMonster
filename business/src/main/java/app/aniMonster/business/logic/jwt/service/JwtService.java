@@ -28,7 +28,7 @@ public class JwtService {
 
     public String validateToken(String token) {
         var map = tokenHelperIfs.validationTokenWithThrow(token);
-        var id = map.get("socialId");
+        var id = map.get("social_id");
 
         Objects.requireNonNull(id, ()->{
             throw new BusinessException(BusinessErrorCode.NULL_POINT,"Invalid token");
