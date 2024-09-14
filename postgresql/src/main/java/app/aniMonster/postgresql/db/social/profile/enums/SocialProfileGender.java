@@ -1,12 +1,12 @@
-package app.aniMonster.postgresql.db.social.enums;
+package app.aniMonster.postgresql.db.social.profile.enums;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum SocialGender {
+public enum SocialProfileGender {
     MALE("남성"),
     FEMALE("여성"),
-    NONE("미설정")
+    NOT_SET("미설정")
     ;
 
     private final String description;

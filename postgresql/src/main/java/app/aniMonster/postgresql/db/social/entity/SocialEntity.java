@@ -1,6 +1,5 @@
 package app.aniMonster.postgresql.db.social.entity;
 
-import app.aniMonster.postgresql.db.social.enums.SocialGender;
 import app.aniMonster.postgresql.db.social.enums.SocialIsAdult;
 import app.aniMonster.postgresql.db.social.enums.SocialStatus;
 import jakarta.persistence.*;
@@ -16,7 +15,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "social")
+@Table(name = "tbl_social")
 public class SocialEntity {
 
     @Id

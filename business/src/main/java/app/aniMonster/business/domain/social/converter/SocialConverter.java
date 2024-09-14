@@ -49,11 +49,25 @@ public class SocialConverter {
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social sign up failed"));
     }
 
+    public SocialEntity toEntity(SocialSignResponse socialSingResponse){
+        return Optional.ofNullable(socialSingResponse)
+                .map(it -> {
+                    return SocialEntity.builder()
+                            .socialId(encryptUtil.encryptEncode(it.getSocialId()))
+                            .isAdult(it.getIsAdult())
+                            .status(it.getStatus())
+                            .build();
+                })
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social sign up failed"));
+    }
+
     public SocialSignResponse toSignResponse(SocialEntity socialEntity){
         return Optional.ofNullable(socialEntity)
                 .map(it ->{
                     return SocialSignResponse.builder()
                             .socialId(encryptUtil.encryptDecode(it.getSocialId()))
+                            .isAdult(it.getIsAdult())
+                            .status(it.getStatus())
                             .build();
                 })
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social Data Null"));

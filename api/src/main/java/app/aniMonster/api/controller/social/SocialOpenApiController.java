@@ -4,6 +4,7 @@ import app.aniMonster.api.common.api.Api;
 import app.aniMonster.business.domain.social.business.SocialBusiness;
 import app.aniMonster.business.domain.social.model.SocialSignRequest;
 import app.aniMonster.business.logic.jwt.model.JwtResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ public class SocialOpenApiController {
 
     private final SocialBusiness socialBusiness;
 
+    @Operation(summary = "유저 생성 및 로그인", description = "이메일과 프로바이더로 검색하여 업으면 생성 및 로그인 있으면 로그인")
     @PostMapping("/sign")
     public Api<JwtResponse> sign(
             @Valid

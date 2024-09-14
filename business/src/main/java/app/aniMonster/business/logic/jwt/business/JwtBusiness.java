@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -23,9 +24,14 @@ public class JwtBusiness {
     public JwtResponse issueToken(SocialSignResponse response) {
         return Optional.ofNullable(response)
                 .map(it ->{
-                    var mapData = objectMapper.convertValue(it, HashMap.class);
-                    var accessToken = jwtService.issueAccessToken(mapData);
-                    var refreshToken = jwtService.issueRefreshToken(mapData);
+
+                    var accessMapData = new HashMap<String, Object>();
+                    accessMapData.put("social_id", it.getSocialId());
+
+                    var accessToken = jwtService.issueAccessToken(accessMapData);
+
+                    var refreshMapData = objectMapper.convertValue(it, HashMap.class);
+                    var refreshToken = jwtService.issueRefreshToken(refreshMapData);
                     return jwtConvertor.toResponse(accessToken, refreshToken);
                 })
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social Response is null"));
@@ -33,5 +39,8 @@ public class JwtBusiness {
 
     public String validateToken(String token) {
         return jwtService.validateToken(token);
+    }
+    public SocialSignResponse validateRefreshToken(String refreshToken) {
+        return jwtService.validateRefreshToken(refreshToken);
     }
 }
