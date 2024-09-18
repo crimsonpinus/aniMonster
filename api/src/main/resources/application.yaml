@@ -20,6 +20,7 @@ spring:
 #    driver-class-name: org.postgresql.Driver
 #    username: ${SPRING_DATASOURCE_USERNAME}
 #    password: ${SPRING_DATASOURCE_PASSWORD}
+
 encrypt:
 #  salt: ${POSTGRES_ENCRYPT_SALT}
 #  password: ${POSTGRES_ENCRYPT_PASS}

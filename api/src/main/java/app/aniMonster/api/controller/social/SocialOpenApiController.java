@@ -2,6 +2,7 @@ package app.aniMonster.api.controller.social;
 
 import app.aniMonster.api.common.api.Api;
 import app.aniMonster.business.domain.social.business.SocialBusiness;
+import app.aniMonster.business.domain.social.model.SocialRefreshRequest;
 import app.aniMonster.business.domain.social.model.SocialSignRequest;
 import app.aniMonster.business.logic.jwt.model.JwtResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +27,21 @@ public class SocialOpenApiController {
             @RequestBody Api<SocialSignRequest> request
     ){
         var response = socialBusiness.sign(request.getBody());
+        return Api.OK(response);
+    }
+
+    @Operation(
+            summary = "refresh-token 갱신",
+            description = "access-token으로 갱신 불가 로직 추가 refresh로만 발급 가능"
+    )
+    @PostMapping("/refresh")
+    public Api<JwtResponse> refresh(
+            @Valid
+            @RequestBody
+            Api<SocialRefreshRequest> request
+    ) {
+        var response = socialBusiness.refreshToken(request.getBody());
+
         return Api.OK(response);
     }
 }

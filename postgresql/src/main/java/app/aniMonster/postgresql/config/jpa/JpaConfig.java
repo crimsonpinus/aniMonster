@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @ComponentScan(basePackages = "app.aniMonster.postgresql")
 @EnableJpaRepositories(basePackages = "app.aniMonster.postgresql")
-public class JpaConfig {
+public class  JpaConfig {
 
     @PersistenceContext
     private EntityManager entityManager;

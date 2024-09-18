@@ -22,7 +22,15 @@ public class SocialProfileApiController {
 
     @Operation(
             summary = "유저 세부정보 업데이트",
-            description = "아래 정보충 업데이트 할 값만 넘겨주면 관련 값 업데이트"
+            description = """
+                아래 정보충 업데이트 할 값만 넘겨주면 관련 값 업데이트\n
+                **하위 값은  아래의 값만 허용
+                - gender = MALE("남성"), FEMALE("여성"), NOT_SET("미설정")
+                - service_terms = PERMIT("승인"), REFUSE("거절")
+                - privacy_term = PERMIT("승인"), REFUSE("거절")
+                - marketing_opt_in_term = PERMIT("승인"), REFUSE("거절")
+                - third_party_term = PERMIT("승인"), REFUSE("거절")
+                """
     )
     @PostMapping("/update")
     public Api<SocialProfileResponse> update(

@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum SocialStatus {
-    REGISTERED("등록"),
     UNREGISTERED("해지"),
+    REGISTERED("등록"),
     ;
 
     private final String description;
