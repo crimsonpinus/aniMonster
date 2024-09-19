@@ -16,8 +16,8 @@ public class ContactAdminRequest {
     @NotBlank
     private String social_id;
 
-    @NotBlank
-    private String answer_admin_id;
+//    @NotBlank
+//    private String answer_admin_id;
 
     @NotBlank
     private String answer;

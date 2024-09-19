@@ -55,8 +55,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         }
 
         var socialId = jwtBusiness.validateToken(accessToken);
-        log.info("social id ---", socialId);
-        System.out.println("social id ---"+ socialId);
         if (socialId != null) {
             var requestContext = Objects.requireNonNull(RequestContextHolder.getRequestAttributes());
             //어디서나 아래의 형식을 사용하여 호출하여 사용 가능
@@ -68,7 +66,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
 
             requestContext.setAttribute("socialId" , socialId, RequestAttributes.SCOPE_REQUEST);
-            System.out.println("social id ---end" );
             return true;
         }
 

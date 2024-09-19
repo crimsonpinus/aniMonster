@@ -19,14 +19,30 @@ public class SocialProfileService {
         var socialProfileCheck = socialProfileRepository.findFirstBySocialIdOrderByIdDesc(socialProfileEntity.getSocialId())
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.BAD_REQUEST, "Social profile not found"));
 
-        socialProfileCheck.setGender(socialProfileEntity.getGender());
-        socialProfileCheck.setPhone(socialProfileEntity.getPhone());
-        socialProfileCheck.setBirthYear(socialProfileEntity.getBirthYear());
-        socialProfileCheck.setBirth(socialProfileEntity.getBirth());
-        socialProfileCheck.setServiceTerms(socialProfileEntity.getServiceTerms());
-        socialProfileCheck.setPrivacyTerms(socialProfileEntity.getPrivacyTerms());
-        socialProfileCheck.setMarketingOptInTerms(socialProfileEntity.getMarketingOptInTerms());
-        socialProfileCheck.setThirdPartyTerms(socialProfileEntity.getThirdPartyTerms());
+        if(socialProfileEntity.getGender() != null) {
+            socialProfileCheck.setGender(socialProfileEntity.getGender());
+        }
+        if(socialProfileEntity.getPhone() != null) {
+            socialProfileCheck.setPhone(socialProfileEntity.getPhone());
+        }
+        if(socialProfileEntity.getBirthYear() != null) {
+            socialProfileCheck.setBirthYear(socialProfileEntity.getBirthYear());
+        }
+        if(socialProfileEntity.getBirth() != null) {
+            socialProfileCheck.setBirth(socialProfileEntity.getBirth());
+        }
+        if(socialProfileEntity.getServiceTerms() != null) {
+            socialProfileCheck.setServiceTerms(socialProfileEntity.getServiceTerms());
+        }
+        if(socialProfileEntity.getPrivacyTerms() != null) {
+            socialProfileCheck.setPrivacyTerms(socialProfileEntity.getPrivacyTerms());
+        }
+        if(socialProfileEntity.getMarketingOptInTerms() != null) {
+            socialProfileCheck.setMarketingOptInTerms(socialProfileEntity.getMarketingOptInTerms());
+        }
+        if(socialProfileEntity.getThirdPartyTerms() != null) {
+            socialProfileCheck.setThirdPartyTerms(socialProfileEntity.getThirdPartyTerms());
+        }
 
         return socialProfileCheck;
     }

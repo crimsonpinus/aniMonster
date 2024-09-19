@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface SocialRepository extends JpaRepository<SocialEntity, Long> {
 
     Optional<SocialEntity> findFirstByEmailAndProviderOrderByEmailDesc(String email, String provider);
-    Optional<SocialEntity> findFirstBySocialIdAndStatusOrderBySocialIdDesc(String socialId, SocialStatus status);
+    Optional<SocialEntity> findFirstBySocialIdAndStatusOrderByIdDesc(String socialId, SocialStatus status);
+    Optional<SocialEntity> findFirstBySocialIdOrderByIdDesc(String socialId);
 }

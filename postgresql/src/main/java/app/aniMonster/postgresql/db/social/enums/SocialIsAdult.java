@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum SocialIsAdult {
-    REGISTERED("Y"),
     UNREGISTERED("N"),
+    REGISTERED("Y"),
     ;
 
     private final String description;

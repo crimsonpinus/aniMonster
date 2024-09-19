@@ -1,6 +1,7 @@
 package app.aniMonster.api.controller.social.profile;
 
 import app.aniMonster.api.common.api.Api;
+import app.aniMonster.api.controller.social.Social;
 import app.aniMonster.business.common.annotation.SocialSession;
 import app.aniMonster.business.domain.social.profile.business.SocialProfileBusiness;
 import app.aniMonster.business.domain.social.profile.model.SocialProfileRequest;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class SocialProfileApiController {
 
     private final SocialProfileBusiness socialProfileBusiness;
+
+    private final Social social;
 
     @Operation(
             summary = "유저 세부정보 업데이트",
@@ -43,13 +46,11 @@ public class SocialProfileApiController {
 
     @Operation(
             summary = "access-token을 이용하아 유저 세부 정보 획득",
-            description = "social_id는 swagger특징으로 값을 요청하나 아무 값이나 넣으면 됨 (세션에서 주는값을 받아야하는 값으로 swagger에서 착각하여 발생) "
+            description = " "
     )
     @PostMapping("/showMe")
-    public Api<SocialProfileResponse> showMe(
-            @SocialSession String social_id
-    ){
-        var response = socialProfileBusiness.showMe(social_id);
+    public Api<SocialProfileResponse> showMe(){
+        var response = socialProfileBusiness.showMe(social.getSocialId());
         return Api.OK(response);
     }
 

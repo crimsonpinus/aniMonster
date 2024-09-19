@@ -7,5 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ContactRepository extends JpaRepository<ContactEntity, Long> {
-    Optional<List<ContactEntity>> findBySocialIdOrderByIdDesc(String socialId);
+    List<ContactEntity> findAllBySocialIdOrderByIdDesc(String socialId);
+    List<ContactEntity> findAllByAnswerIsNullOrderByIdDesc();
+    Optional<ContactEntity> findFirstByIdAndSocialIdOrderByIdDesc(Long id, String socialId);
 }

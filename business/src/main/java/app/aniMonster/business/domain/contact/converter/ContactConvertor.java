@@ -35,17 +35,27 @@ public class ContactConvertor {
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Consumer Request Null"));
     }
 
-    public ContactEntity toEntity(ContactAdminRequest contactAdminRequest) {
+    public ContactEntity toEntity(ContactAdminRequest contactAdminRequest, String adminId) {
         return Optional.ofNullable(contactAdminRequest)
                 .map(it -> {
                     return ContactEntity.builder()
                             .id(it.getId())
-                            .answerAdminId(it.getAnswer_admin_id())
+                            .socialId(encryptUtil.encryptEncode(it.getSocial_id()))
+                            .adminId(adminId)
                             .answer(it.getAnswer())
                             .answerAt(Instant.now())
                             .build();
                 })
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Admin Request Null"));
+    }
+    public ContactEntity toEntity(String socialId){
+        return Optional.ofNullable(socialId)
+                .map(it -> {
+                    return ContactEntity.builder()
+                            .socialId(encryptUtil.encryptEncode(socialId))
+                            .build();
+                })
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social Id Null"));
     }
 
     public ContactResponse toResponse(ContactEntity contactEntity) {
@@ -58,7 +68,7 @@ public class ContactConvertor {
                             .title(it.getTitle())
                             .contents(it.getContents())
                             .registeredAt(it.getRegisteredAt())
-                            .answerAdminId(it.getAnswerAdminId())
+                            .adminId(it.getAdminId())
                             .answer(it.getAnswer())
                             .answerAt(it.getAnswerAt())
                             .build();

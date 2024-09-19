@@ -48,7 +48,7 @@ public class ContactEntity {
 
     @Size(max = 100)
     @Column(name = "answer_admin_id", length = 100)
-    private String answerAdminId;
+    private String adminId;
 
     @Column(name = "answer", length = Integer.MAX_VALUE)
     private String answer;

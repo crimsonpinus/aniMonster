@@ -5,6 +5,7 @@ import app.aniMonster.business.domain.social.converter.SocialConverter;
 import app.aniMonster.business.domain.social.model.SocialRefreshRequest;
 import app.aniMonster.business.domain.social.model.SocialResponse;
 import app.aniMonster.business.domain.social.model.SocialSignRequest;
+import app.aniMonster.business.domain.social.model.SocialUpdateRequest;
 import app.aniMonster.business.domain.social.service.SocialService;
 import app.aniMonster.business.logic.jwt.business.JwtBusiness;
 import app.aniMonster.business.logic.jwt.model.JwtResponse;
@@ -25,6 +26,13 @@ public class SocialBusiness {
         var usedEntity = socialService.sign(entity);
         var response = socialConverter.toSignResponse(usedEntity);
         return jwtBusiness.issueToken(response);
+    }
+
+    public SocialResponse update(SocialUpdateRequest request, String id) {
+        var entity = socialConverter.toEntity(request, id);
+        var usedEntity = socialService.update(entity);
+        var response = socialConverter.toResponse(usedEntity);
+        return response;
     }
 
     public SocialResponse showMe(String id) {

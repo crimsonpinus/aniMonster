@@ -26,7 +26,7 @@ public class ContactResponse {
 
     private Instant registeredAt;
 
-    private String answerAdminId;
+    private String adminId;
 
     private String answer;
 

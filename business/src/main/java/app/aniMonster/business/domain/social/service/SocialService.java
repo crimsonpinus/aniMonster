@@ -33,6 +33,7 @@ public class SocialService {
                 .map(it -> {
                     it.setSocialId(socialEntity.getSocialId());
                     it.setName(socialEntity.getName());
+                    it.setStatus(SocialStatus.REGISTERED);
                     return it;
                 })
                 .orElseGet(() -> {
@@ -50,9 +51,36 @@ public class SocialService {
                 });
     }
 
+
+    @Transactional
+    public SocialEntity update(SocialEntity socialEntity) {
+        var socialCheck = socialRepository.findFirstBySocialIdOrderByIdDesc(socialEntity.getSocialId());
+
+        return socialCheck
+                .map(it -> {
+                    it.setNick(socialEntity.getNick());
+
+                    if (socialEntity.getStatus() != null) {
+                        it.setStatus(socialEntity.getStatus());
+                    }
+                    if (socialEntity.getIsAdult() != null){
+                        it.setIsAdult(socialEntity.getIsAdult());
+                    }
+                    if (socialEntity.getStatus() == SocialStatus.UNREGISTERED) {
+                        it.setUnregisteredAt(Instant.now());
+                    }
+                    log.info("Updating social profile with id {}", socialEntity.getSocialId());
+                    return it;
+                })
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT, "Not Found Social User"));
+
+    }
+
     @Transactional
     public SocialEntity showMe(SocialEntity socialEntity) {
-        return socialRepository.findFirstBySocialIdAndStatusOrderBySocialIdDesc(socialEntity.getSocialId(), SocialStatus.REGISTERED)
+        return socialRepository.findFirstBySocialIdAndStatusOrderByIdDesc(socialEntity.getSocialId(), SocialStatus.REGISTERED)
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.BAD_REQUEST,"Not Found Social User"));
     }
+
+
 }

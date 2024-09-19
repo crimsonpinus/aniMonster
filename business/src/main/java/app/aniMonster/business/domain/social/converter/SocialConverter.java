@@ -6,6 +6,7 @@ import app.aniMonster.business.common.exception.BusinessException;
 import app.aniMonster.business.domain.social.model.SocialResponse;
 import app.aniMonster.business.domain.social.model.SocialSignResponse;
 import app.aniMonster.business.domain.social.model.SocialSignRequest;
+import app.aniMonster.business.domain.social.model.SocialUpdateRequest;
 import app.aniMonster.business.logic.encrypt.DbEncryptUtil;
 import app.aniMonster.postgresql.db.social.entity.SocialEntity;
 import app.aniMonster.postgresql.db.social.enums.SocialIsAdult;
@@ -39,6 +40,22 @@ public class SocialConverter {
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social sign up failed"));
     }
 
+    public SocialEntity toEntity(SocialUpdateRequest socialUpdateRequest, String socialId){
+        return Optional.ofNullable(socialUpdateRequest)
+                .map(it -> {
+                    return SocialEntity.builder()
+                            .socialId(encryptUtil.encryptEncode(socialId))
+                            .nick(it.getNick())
+                            .status(it.getStatus())
+                            .isAdult(it.getIs_adult())
+                            .build();
+
+
+                })
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social update failed"));
+    }
+
+
     public SocialEntity toEntity(String id){
         return Optional.ofNullable(id)
                 .map(it -> {
@@ -49,6 +66,7 @@ public class SocialConverter {
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social sign up failed"));
     }
 
+    //token 발행시 사용됨
     public SocialEntity toEntity(SocialSignResponse socialSingResponse){
         return Optional.ofNullable(socialSingResponse)
                 .map(it -> {
@@ -60,6 +78,9 @@ public class SocialConverter {
                 })
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social sign up failed"));
     }
+
+
+
 
     public SocialSignResponse toSignResponse(SocialEntity socialEntity){
         return Optional.ofNullable(socialEntity)
@@ -89,4 +110,5 @@ public class SocialConverter {
                 })
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social User Null"));
     }
+
 }
