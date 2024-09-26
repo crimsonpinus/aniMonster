@@ -26,6 +26,7 @@ encrypt:
 #  password: ${POSTGRES_ENCRYPT_PASS}
   algorithm: aes
   secretKey: AniMonsterBemine
+  iv: BmineAniMonster
 
 #  naverSecretKey: ncp_iam_BPKMKRC8my9RwXz8x4XpJkDqRl0ramzmzf
 #  naverAccessKey: ncp_iam_BPAMKR3jRhvJP2DGrP9M
