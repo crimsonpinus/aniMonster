@@ -13,21 +13,21 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class SocialProfileResponse {
 
-    private String socialId;
+    private String social_id;
 
     private SocialProfileGender gender;
 
     private String phone;
 
-    private LocalDate birthYear;
+    private LocalDate birth_year;
 
     private String birth;
 
-    private SocialProfilePermit serviceTerms;
+    private SocialProfilePermit service_terms;
 
-    private SocialProfilePermit privacyTerms;
+    private SocialProfilePermit privacy_terms;
 
-    private SocialProfilePermit marketingOptInTerms;
+    private SocialProfilePermit marketing_opt_in_terms;
 
-    private SocialProfilePermit thirdPartyTerms;
+    private SocialProfilePermit third_party_terms;
 }

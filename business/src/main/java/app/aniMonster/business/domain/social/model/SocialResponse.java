@@ -15,7 +15,7 @@ import java.time.Instant;
 @Builder
 public class SocialResponse {
 
-    private String socialId;
+    private String social_id;
 
     private String name;
 
@@ -27,8 +27,8 @@ public class SocialResponse {
 
     private SocialStatus status;
 
-    private SocialIsAdult isAdult;
+    private SocialIsAdult is_adult;
 
-    private Instant registeredAt;
+    private Instant registered_at;
 
 }

@@ -6,7 +6,6 @@ import app.aniMonster.business.domain.social.profile.model.SocialProfileRequest;
 import app.aniMonster.business.domain.social.profile.model.SocialProfileResponse;
 import app.aniMonster.business.logic.encrypt.DbEncryptUtil;
 import app.aniMonster.postgresql.db.social.profile.entity.SocialProfileEntity;
-import app.aniMonster.postgresql.db.social.profile.enums.SocialProfilePermit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -51,15 +50,15 @@ public class SocialProfileConverter {
         return Optional.ofNullable(socialProfileEntity)
                 .map(it -> {
                     return SocialProfileResponse.builder()
-                            .socialId(encryptUtil.encryptDecode(it.getSocialId()))
+                            .social_id(encryptUtil.encryptDecode(it.getSocialId()))
                             .gender(it.getGender())
                             .phone(it.getPhone())
-                            .birthYear(it.getBirthYear())
+                            .birth_year(it.getBirthYear())
                             .birth(it.getBirth())
-                            .serviceTerms(it.getServiceTerms())
-                            .privacyTerms(it.getPrivacyTerms())
-                            .marketingOptInTerms(it.getMarketingOptInTerms())
-                            .thirdPartyTerms(it.getThirdPartyTerms())
+                            .service_terms(it.getServiceTerms())
+                            .privacy_terms(it.getPrivacyTerms())
+                            .marketing_opt_in_terms(it.getMarketingOptInTerms())
+                            .third_party_terms(it.getThirdPartyTerms())
                             .build();
                 })
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.BAD_REQUEST,"Social profile could not be converted to response"));

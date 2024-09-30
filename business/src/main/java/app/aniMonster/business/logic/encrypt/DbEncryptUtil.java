@@ -2,16 +2,26 @@ package app.aniMonster.business.logic.encrypt;
 
 import app.aniMonster.business.common.error.BusinessErrorCode;
 import app.aniMonster.business.common.exception.BusinessException;
-import lombok.Getter;
+import org.bouncycastle.bcpg.ArmoredInputStream;
+import org.bouncycastle.bcpg.ArmoredOutputStream;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.openpgp.*;
+import org.bouncycastle.openpgp.operator.jcajce.JcaKeyFingerprintCalculator;
+import org.bouncycastle.openpgp.operator.jcajce.JcePBEDataDecryptorFactoryBuilder;
+import org.bouncycastle.openpgp.operator.jcajce.JcePBEKeyEncryptionMethodGenerator;
+import org.bouncycastle.openpgp.operator.jcajce.JcePGPDataEncryptorBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.SecureRandom;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.security.Security;
 import java.util.Base64;
 
 @Component
@@ -25,7 +35,18 @@ public class DbEncryptUtil {
     private String iv;
     private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
 
+    // Bouncy Castle 보안 프로바이더를 등록하는 부분
+    static {
+        if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
+            Security.addProvider(new BouncyCastleProvider());
+        }
+    }
+
     private String encrypt(String value) throws Exception {
+
+        /**
+         * java 전용 암호화
+         */
         KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
         keyGenerator.init(128);
         SecretKey secretKeySpec = new SecretKeySpec(secretKey.getBytes(), algorithm);
@@ -39,28 +60,13 @@ public class DbEncryptUtil {
         byte[] encryptedValue = cipher.doFinal(value.getBytes("UTF-8"));
         return Base64.getEncoder().encodeToString(encryptedValue);
 
-
-//        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes("UTF-8"), algorithm);
-//
-//        // IV 생성
-//        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-//        byte[] iv = new byte[cipher.getBlockSize()];
-//        SecureRandom random = new SecureRandom();
-//        random.nextBytes(iv); // 난수로 IV 생성
-//        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
-//
-//        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
-//        byte[] encryptedValue = cipher.doFinal(value.getBytes("UTF-8"));
-//
-//        // IV를 암호문 앞에 붙여 저장 (Base64로 인코딩)
-//        byte[] encryptedWithIv = new byte[iv.length + encryptedValue.length];
-//        System.arraycopy(iv, 0, encryptedWithIv, 0, iv.length);
-//        System.arraycopy(encryptedValue, 0, encryptedWithIv, iv.length, encryptedValue.length);
-//
-//        return Base64.getEncoder().encodeToString(encryptedWithIv); // Base64 인코딩
     }
 
     private String decrypt(String encryptedValue) throws Exception {
+
+        /**
+         * java 전용 암호화
+         */
         SecretKey secretKeySpec = new SecretKeySpec(secretKey.getBytes(), algorithm);
         Cipher cipher = Cipher.getInstance(algorithm);
 
@@ -73,23 +79,6 @@ public class DbEncryptUtil {
         return new String(decryptedValue, "UTF-8");
 
 
-//        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes("UTF-8"), algorithm);
-//
-//        byte[] decodedValue = Base64.getDecoder().decode(encryptedValue);
-//
-//        // IV와 암호문 분리
-//        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-//        byte[] iv = new byte[cipher.getBlockSize()];
-//        System.arraycopy(decodedValue, 0, iv, 0, iv.length);
-//        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
-//
-//        byte[] encryptedBytes = new byte[decodedValue.length - iv.length];
-//        System.arraycopy(decodedValue, iv.length, encryptedBytes, 0, encryptedBytes.length);
-//
-//        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
-//        byte[] decryptedValue = cipher.doFinal(encryptedBytes);
-//
-//        return new String(decryptedValue, "UTF-8");
     }
 
     public String encryptEncode(String value) {

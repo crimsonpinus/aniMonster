@@ -71,8 +71,8 @@ public class SocialConverter {
         return Optional.ofNullable(socialSingResponse)
                 .map(it -> {
                     return SocialEntity.builder()
-                            .socialId(encryptUtil.encryptEncode(it.getSocialId()))
-                            .isAdult(it.getIsAdult())
+                            .socialId(encryptUtil.encryptEncode(it.getSocial_id()))
+                            .isAdult(it.getIs_adult())
                             .status(it.getStatus())
                             .build();
                 })
@@ -86,8 +86,8 @@ public class SocialConverter {
         return Optional.ofNullable(socialEntity)
                 .map(it ->{
                     return SocialSignResponse.builder()
-                            .socialId(encryptUtil.encryptDecode(it.getSocialId()))
-                            .isAdult(it.getIsAdult())
+                            .social_id(encryptUtil.encryptDecode(it.getSocialId()))
+                            .is_adult(it.getIsAdult())
                             .status(it.getStatus())
                             .build();
                 })
@@ -98,14 +98,14 @@ public class SocialConverter {
         return Optional.ofNullable(socialEntity)
                 .map(it ->{
                     return SocialResponse.builder()
-                            .socialId(encryptUtil.encryptDecode(it.getSocialId()))
+                            .social_id(encryptUtil.encryptDecode(it.getSocialId()))
                             .name(encryptUtil.encryptDecode(it.getName()))
                             .email(encryptUtil.encryptDecode(it.getEmail()))
                             .nick(it.getNick())
                             .provider(it.getProvider())
                             .status(it.getStatus())
-                            .isAdult(it.getIsAdult())
-                            .registeredAt(it.getRegisteredAt())
+                            .is_adult(it.getIsAdult())
+                            .registered_at(it.getRegisteredAt())
                             .build();
                 })
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social User Null"));

@@ -12,6 +12,10 @@ import app.aniMonster.business.logic.jwt.model.JwtResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 @RequiredArgsConstructor
 @Business
 @Slf4j
@@ -47,5 +51,11 @@ public class SocialBusiness {
         var usedEntity = socialService.showMe(entity);
         var response = socialConverter.toSignResponse(usedEntity);
         return jwtBusiness.issueToken(response);
+    }
+
+    public Instant getRegisteredAt(String id){
+        var entity = socialConverter.toEntity(id);
+        var usedEntity = socialService.showMe(entity);
+        return usedEntity.getRegisteredAt();
     }
 }

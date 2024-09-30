@@ -48,9 +48,9 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
-// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk18on
-    implementation group: 'org.bouncycastle', name: 'bcprov-jdk18on', version: '1.78.1'
-
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.78.1'  // 기본 암호화 기능
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.78.1'  // PGP 관련 기능
+    implementation 'org.bouncycastle:bcpg-jdk18on:1.78.1'    // ArmoredOutputStream 및 PGP 관련 클래스 포함
 }
 
 bootJar {

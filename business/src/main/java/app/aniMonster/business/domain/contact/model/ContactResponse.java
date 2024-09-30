@@ -16,7 +16,7 @@ public class ContactResponse {
 
     private Long id;
 
-    private String socialId;
+    private String social_id;
 
     private ContactCategory category;
 
@@ -24,11 +24,11 @@ public class ContactResponse {
 
     private String contents;
 
-    private Instant registeredAt;
+    private Instant registered_at;
 
-    private String adminId;
+    private String admin_id;
 
     private String answer;
 
-    private Instant answerAt;
+    private Instant answer_at;
 }

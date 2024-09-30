@@ -59,9 +59,9 @@ public class JwtService {
             throw new BusinessException(BusinessErrorCode.NULL_POINT,"Invalid token");
         }
         return SocialSignResponse.builder()
-                .socialId(id)
+                .social_id(id)
                 .status(status)
-                .isAdult(isAdult)
+                .is_adult(isAdult)
                 .build();
     }
 }

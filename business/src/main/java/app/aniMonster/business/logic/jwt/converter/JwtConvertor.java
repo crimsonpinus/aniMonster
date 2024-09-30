@@ -25,10 +25,10 @@ public class JwtConvertor {
         });
 
         return JwtResponse.builder()
-                .accessToken(accessToken.getToken())
-                .accessTokenExpireAt(accessToken.getExpiresAt())
-                .refreshToken(refreshToken.getToken())
-                .refreshTokenExpireAt(refreshToken.getExpiresAt())
+                .access_token(accessToken.getToken())
+                .access_token_expire_at(accessToken.getExpiresAt())
+                .refresh_token(refreshToken.getToken())
+                .refresh_token_expire_at(refreshToken.getExpiresAt())
                 .build();
     }
 }

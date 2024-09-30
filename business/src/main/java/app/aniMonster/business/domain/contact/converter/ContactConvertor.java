@@ -63,14 +63,14 @@ public class ContactConvertor {
                 .map(it -> {
                     return ContactResponse.builder()
                             .id(it.getId())
-                            .socialId(encryptUtil.encryptDecode(it.getSocialId()))
+                            .social_id(encryptUtil.encryptDecode(it.getSocialId()))
                             .category(it.getCategory())
                             .title(it.getTitle())
                             .contents(it.getContents())
-                            .registeredAt(it.getRegisteredAt())
-                            .adminId(it.getAdminId())
+                            .registered_at(it.getRegisteredAt())
+                            .admin_id(it.getAdminId())
                             .answer(it.getAnswer())
-                            .answerAt(it.getAnswerAt())
+                            .answer_at(it.getAnswerAt())
                             .build();
                 })
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"ContactEntity is Null"));

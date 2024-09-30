@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class SocialSignResponse {
 
-    private String socialId;
+    private String social_id;
 
-    private SocialIsAdult isAdult;
+    private SocialIsAdult is_adult;
 
     private SocialStatus status;
 }

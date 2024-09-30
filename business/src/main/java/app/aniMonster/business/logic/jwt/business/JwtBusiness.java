@@ -11,7 +11,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -26,7 +25,7 @@ public class JwtBusiness {
                 .map(it ->{
 
                     var accessMapData = new HashMap<String, Object>();
-                    accessMapData.put("social_id", it.getSocialId());
+                    accessMapData.put("social_id", it.getSocial_id());
 
                     var accessToken = jwtService.issueAccessToken(accessMapData);
 

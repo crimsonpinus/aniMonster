@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 @Builder
 public class JwtResponse {
 
-    private String accessToken;
-    private LocalDateTime accessTokenExpireAt;
+    private String access_token;
+    private LocalDateTime access_token_expire_at;
 
-    private String refreshToken;
-    private LocalDateTime refreshTokenExpireAt;
+    private String refresh_token;
+    private LocalDateTime refresh_token_expire_at;
 }
