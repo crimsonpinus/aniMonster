@@ -9,10 +9,9 @@ import app.aniMonster.business.domain.contact.model.ContactResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,20 +24,24 @@ public class ContactApiController {
 
     private final Social social;
 
+
     @Operation(
             summary = "최초 문의하기 저장",
             description = """
                     **하위 값은  아래의 값만 허용\n
                         - category = ABOUT_TECHNICAL_SUPPORT("기술지원"), ABOUT_PERSONAL_PROTECTION("개인정보 보호 및 보안 관련 문의"), COMMENT_FEEDBACK("의견 및 피드백"), ABOUT_SOCIAL("계정관련 문의"), REPORT_BUG_ERROR("오류 및 버그 신고") 
                     """
-
     )
-    @PostMapping("/save")
+    @PostMapping(
+            value = "/save",
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE}
+    )
     public Api<ContactResponse> faq(
             @Valid
-            @RequestBody Api<ContactConsumerRequest> request
+            @RequestPart Api<ContactConsumerRequest> request,
+            @RequestPart(value = "images", required = false) List<MultipartFile> files
     ) {
-        var response = contactBusiness.save(request.getBody());
+        var response = contactBusiness.save(request.getBody(), files);
         return Api.OK(response);
     }
 
@@ -54,6 +57,7 @@ public class ContactApiController {
         return Api.OK(response);
     }
 
+
     @Operation(
             summary = "관리자 응답 달지 않은 글 검색",
             description = """
@@ -65,6 +69,7 @@ public class ContactApiController {
         var response = contactBusiness.findReply();
         return Api.OK(response);
     }
+
 
     @Operation(
             summary = "문의사항 답변",
