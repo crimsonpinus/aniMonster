@@ -10,6 +10,7 @@ import app.aniMonster.business.domain.social.business.SocialBusiness;
 import app.aniMonster.postgresql.db.file.entity.FileEntity;
 import app.aniMonster.postgresql.db.file.enums.FileIsActivate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.*;
@@ -21,6 +22,9 @@ import java.util.UUID;
 public class FileConvertor {
 
     private final SocialBusiness socialBusiness;
+
+    @Value("${file.path}")
+    private String PATH;
 
     public FileEntity toEntity(FileRequest fileRequest, MultipartFile multipartFile) {
         return Optional.ofNullable(fileRequest)
@@ -84,7 +88,7 @@ public class FileConvertor {
 
     private String getFilePath(FileRequest request, Instant now) {
 
-        String path = "/Users/sanghyukmoon/AniMonster/aniMonster_img";
+        String path = PATH;
         var date = LocalDateTime.ofInstant(now, ZoneId.systemDefault());
 
         String finalPath = path;
