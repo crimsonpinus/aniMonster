@@ -1,6 +1,7 @@
 package app.aniMonster.api.controller.file;
 
 import app.aniMonster.api.common.api.Api;
+import app.aniMonster.api.controller.social.Social;
 import app.aniMonster.business.domain.file.business.FileBusiness;
 import app.aniMonster.business.domain.file.model.FileFindRequest;
 import app.aniMonster.business.domain.file.model.FileRequest;
@@ -20,6 +21,7 @@ import java.util.List;
 public class fileApiController {
 
     private final FileBusiness fileBusiness;
+    private final Social social;
 
     @Operation (
             summary = "파일 업로드",
@@ -44,7 +46,7 @@ public class fileApiController {
             @RequestPart(value = "image", required = false) List<MultipartFile> files
     ) {
         var responses = fileBusiness.upload(request.getBody(), files);
-        return Api.OK(responses);
+        return social.withToken(responses, request.getResult());
     }
 
     @Operation (
@@ -60,7 +62,7 @@ public class fileApiController {
             @RequestBody Api<FileFindRequest> request
     ) {
         var response = fileBusiness.find(request.getBody());
-        return Api.OK(response);
+        return social.withToken(response, request.getResult());
     }
 
     @Operation (
@@ -77,6 +79,6 @@ public class fileApiController {
             @RequestBody Api<FileFindRequest> request
     ) {
         var response = fileBusiness.deactivate(request.getBody());
-        return Api.OK(response);
+        return social.withToken(response, request.getResult());
     }
 }

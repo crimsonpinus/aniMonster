@@ -41,7 +41,7 @@ public class SocialProfileApiController {
             @RequestBody Api<SocialProfileRequest> request
     ) {
         var response = socialProfileBusiness.update(request.getBody());
-        return Api.OK(response);
+        return social.withToken(response, request.getResult());
     }
 
     @Operation(
@@ -49,9 +49,12 @@ public class SocialProfileApiController {
             description = " "
     )
     @PostMapping("/showMe")
-    public Api<SocialProfileResponse> showMe(){
+    public Api<SocialProfileResponse> showMe(
+            @Valid
+            @RequestBody Api<String> request
+    ){
         var response = socialProfileBusiness.showMe(social.getSocialId());
-        return Api.OK(response);
+        return social.withToken(response, request.getResult());
     }
 
 }

@@ -42,7 +42,7 @@ public class ContactApiController {
             @RequestPart(value = "images", required = false) List<MultipartFile> files
     ) {
         var response = contactBusiness.save(request.getBody(), files);
-        return Api.OK(response);
+        return social.withToken(response, request.getResult());
     }
 
     @Operation(
@@ -52,9 +52,13 @@ public class ContactApiController {
                     """
     )
     @PostMapping("/findSocialId")
-    public Api<List<ContactResponse>> findSocialId(){
+    public Api<List<ContactResponse>> findSocialId(
+            @Valid
+            @RequestBody Api<String> request
+    ){
         var response = contactBusiness.findSocialId(social.getSocialId());
-        return Api.OK(response);
+
+        return social.withToken(response, request.getResult());
     }
 
 
@@ -65,9 +69,13 @@ public class ContactApiController {
                     """
     )
     @PostMapping("/findReply")
-    public Api<List<ContactResponse>> findReply(){
+    public Api<List<ContactResponse>> findReply(
+            @Valid
+            @RequestBody Api<String> request
+    ){
         var response = contactBusiness.findReply();
-        return Api.OK(response);
+
+        return social.withToken(response, request.getResult());
     }
 
 
@@ -83,6 +91,7 @@ public class ContactApiController {
             @RequestBody Api<ContactAdminRequest> request
     ) {
         var response = contactBusiness.reply(request.getBody(), "API_ADMIN");
-        return Api.OK(response);
+
+        return social.withToken(response, request.getResult());
     }
 }

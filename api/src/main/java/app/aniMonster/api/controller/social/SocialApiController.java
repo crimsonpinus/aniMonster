@@ -40,7 +40,7 @@ public class SocialApiController {
     ) {
 
         var response = socialBusiness.update(request.getBody(), social.getSocialId());
-        return Api.OK(response);
+        return social.withToken(response, request.getResult());
     }
 
     @Operation(
@@ -50,11 +50,14 @@ public class SocialApiController {
                         """
     )
     @PostMapping("/showMe")
-    public Api<SocialResponse> showMe() {
+    public Api<SocialResponse> showMe(
+            @Valid
+            @RequestBody Api<String> request
+    ) {
 
         var response = socialBusiness.showMe(social.getSocialId());
 
-        return Api.OK(response);
+        return social.withToken(response, request.getResult());
     }
 
     public String getSocialId() {

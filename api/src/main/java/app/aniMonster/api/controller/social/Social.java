@@ -39,7 +39,7 @@ public class Social {
             var tokenResult = Result.builder()
                     .result_code(201)
                     .result_message(token.getAccess_token())
-                    .result_description(token.getAccess_token())
+                    .result_description(token.getRefresh_token())
                     .build();
             api.setResult(tokenResult);
         }
