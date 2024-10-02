@@ -23,9 +23,6 @@ public class FileConvertor {
 
     private final SocialBusiness socialBusiness;
 
-    @Value("${file.path}")
-    private String PATH;
-
     public FileEntity toEntity(FileRequest fileRequest, MultipartFile multipartFile) {
         return Optional.ofNullable(fileRequest)
                 .map(request -> {
@@ -88,7 +85,7 @@ public class FileConvertor {
 
     private String getFilePath(FileRequest request, Instant now) {
 
-        String path = PATH;
+        String path = "";
         var date = LocalDateTime.ofInstant(now, ZoneId.systemDefault());
 
         String finalPath = path;

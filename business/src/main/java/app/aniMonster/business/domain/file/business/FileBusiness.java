@@ -10,6 +10,7 @@ import app.aniMonster.business.domain.file.model.FileResponse;
 import app.aniMonster.business.domain.file.service.FileService;
 import app.aniMonster.postgresql.db.file.entity.FileEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -23,6 +24,10 @@ public class FileBusiness {
 
     private final FileConvertor fileConvertor;
     private final FileService fileService;
+
+
+    @Value("${file.path}")
+    private String PATH;
 
     //단일 업로드
     public FileResponse upload(FileRequest request, MultipartFile file) {
@@ -68,7 +73,7 @@ public class FileBusiness {
     private void saveFile(FileEntity entity, MultipartFile file) {
         //폴더 확인 및 생성
         File folder = new File(entity.getFilePath());
-        String fullPath = entity.getFilePath() + entity.getFileId() + "." + fileConvertor.getExtension(file);
+        String fullPath = PATH + entity.getFilePath() + entity.getFileId() + "." + fileConvertor.getExtension(file);
         try {
             if(!folder.exists()) {
                 folder.mkdirs();

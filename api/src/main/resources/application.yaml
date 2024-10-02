@@ -36,7 +36,7 @@ encrypt:
 #  naverSMSApi: ncp:sms:kr:337692680951:animonster
 #
 file:
-  path: /Users/sanghyukmoon/AniMonster/aniMonster_img
+  path: /Users/sanghyukmoon/AniMonster/aniMonster_img/
 
 
 jwt:
