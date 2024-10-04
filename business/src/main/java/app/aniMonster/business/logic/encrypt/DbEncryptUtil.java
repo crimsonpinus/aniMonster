@@ -33,6 +33,9 @@ public class DbEncryptUtil {
     private String algorithm;
     @Value(("${encrypt.iv}"))
     private String iv;
+    @Value("${encrypt.activate}")
+    private boolean activate;
+
     private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
 
     // Bouncy Castle 보안 프로바이더를 등록하는 부분
@@ -82,6 +85,9 @@ public class DbEncryptUtil {
     }
 
     public String encryptEncode(String value) {
+        if (!activate) {
+            return value;
+        }
         try {
             return encrypt(value);
         } catch (Exception e) {
@@ -90,6 +96,9 @@ public class DbEncryptUtil {
     }
 
     public String encryptDecode(String value) {
+        if (!activate) {
+            return value;
+        }
         try {
             return decrypt(value);
         } catch (Exception e) {

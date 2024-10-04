@@ -1,5 +1,6 @@
 package app.aniMonster.business.domain.social.model;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class SocialSignRequest {
     private String name;
 
     @NotBlank
+    @Email
     private String email;
 
     @NotBlank
