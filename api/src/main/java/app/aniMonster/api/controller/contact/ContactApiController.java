@@ -41,7 +41,7 @@ public class ContactApiController {
             @RequestPart Api<ContactConsumerRequest> request,
             @RequestPart(value = "images", required = false) List<MultipartFile> files
     ) {
-        System.out.println(request.getResult()+"----------------"+request.getBody());
+
         var response = contactBusiness.save(request.getBody(), files);
         return social.withToken(response, request.getResult());
     }
