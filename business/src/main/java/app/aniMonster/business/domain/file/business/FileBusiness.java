@@ -72,9 +72,10 @@ public class FileBusiness {
     //파일 저장
     private void saveFile(FileEntity entity, MultipartFile file) {
         //폴더 확인 및 생성
-        File folder = new File(entity.getFilePath());
+        File folder = new File(PATH + entity.getFilePath());
         String fullPath = PATH + entity.getFilePath() + entity.getFileId() + "." + fileConvertor.getExtension(file);
         try {
+            System.out.println("Saving file " + fullPath);
             if(!folder.exists()) {
                 folder.mkdirs();
             }
