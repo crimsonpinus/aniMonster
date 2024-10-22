@@ -109,6 +109,7 @@ public class FileConvertor {
             // path/캐릭텀명(info에 담아서 옴)/현재날짜/계정id 아래에 저장
             case CHARACTER -> {
                 path = path + "/" +
+                        request.getCategory().toString().toLowerCase() + "/" +
                         Optional.ofNullable(request.getInfo())
                         .map(it -> {
                             return  it + "/" +
