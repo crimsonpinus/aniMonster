@@ -24,7 +24,12 @@ public class ContactApiController {
 
     private final Social social;
 
-
+    /**
+     *
+     * @param request
+     * @param files
+     * @return
+     */
     @Operation(
             summary = "최초 문의하기 저장",
             description = """
@@ -63,6 +68,11 @@ public class ContactApiController {
     }
 
 
+    /**
+     *
+     * @param request
+     * @return
+     */
     @Operation(
             summary = "관리자 응답 달지 않은 글 검색",
             description = """
@@ -80,6 +90,11 @@ public class ContactApiController {
     }
 
 
+    /**
+     *
+     * @param request
+     * @return
+     */
     @Operation(
             summary = "문의사항 답변",
             description = """
