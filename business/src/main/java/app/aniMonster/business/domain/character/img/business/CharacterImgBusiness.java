@@ -44,8 +44,9 @@ public class CharacterImgBusiness {
         if (characterImgRequest.getThumbnail() != null) {
             var fileResponse = fileBusiness.upload(fileRequest, characterImgRequest.getThumbnail());
             var entity = characterImgConvertor.toEntity(character, fileResponse, CharacterImgCategory.THUMBNAIL);
+            var usedEntity = characterImgService.save(entity);
 
-            characterImgEntities.add(entity);
+            characterImgEntities.add(usedEntity);
         }
 
         if (characterImgRequest.getCharacter() != null) {
@@ -53,16 +54,18 @@ public class CharacterImgBusiness {
             List<CharacterImgSingleResponse> resp = new ArrayList<>();
             fileResponse.forEach(fileRes -> {
                 var entity = characterImgConvertor.toEntity(character, fileRes, CharacterImgCategory.CHARACTER);
+                var usedEntity = characterImgService.save(entity);
 
-                characterImgEntities.add(entity);
+                characterImgEntities.add(usedEntity);
             });
         }
 
         if (characterImgRequest.getBackground() != null) {
             var fileResponse = fileBusiness.upload(fileRequest, characterImgRequest.getBackground());
             var entity = characterImgConvertor.toEntity(character, fileResponse, CharacterImgCategory.BACKGROUND);
+            var usedEntity = characterImgService.save(entity);
 
-            characterImgEntities.add(entity);
+            characterImgEntities.add(usedEntity);
         }
 
         if (characterImgRequest.getAlbum() != null) {
@@ -70,8 +73,9 @@ public class CharacterImgBusiness {
             List<CharacterImgSingleResponse> resp = new ArrayList<>();
             fileResponse.forEach(fileRes -> {
                 var entity = characterImgConvertor.toEntity(character, fileRes, CharacterImgCategory.ALBUM);
+                var usedEntity = characterImgService.save(entity);
 
-                characterImgEntities.add(entity);
+                characterImgEntities.add(usedEntity);
             });
         }
 

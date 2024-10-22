@@ -60,7 +60,7 @@ public class CharacterImgConvertor {
 
         characterImgEntity.forEach(it -> {
             var singleResponse = toResponse(it);
-            System.out.println("==============="+ singleResponse.getCategory());
+
             switch (singleResponse.getCategory()) {
                 case THUMBNAIL -> {
                     response.setThumbnail_img(singleResponse);
