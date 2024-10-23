@@ -38,4 +38,17 @@ public class FileService {
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT, "Not Found FileId"));
 
     }
+
+    @Transactional
+    public FileEntity activationSwitch(FileEntity entity) {
+        var checkEntity = fileRepository.findFirstByFileIdOrderByIdDesc(entity.getFileId());
+
+        return checkEntity
+                .map(it -> {
+                    it.setIsActivate(entity.getIsActivate());
+                    return it;
+                })
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT, "Not Found FileId"));
+
+    }
 }

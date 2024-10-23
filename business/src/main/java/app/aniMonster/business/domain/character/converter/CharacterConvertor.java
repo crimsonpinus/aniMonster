@@ -4,6 +4,7 @@ import app.aniMonster.business.common.annotation.Converter;
 import app.aniMonster.business.common.error.BusinessErrorCode;
 import app.aniMonster.business.common.exception.BusinessException;
 import app.aniMonster.business.domain.character.img.model.CharacterImgResponse;
+import app.aniMonster.business.domain.character.model.CharacterModifyRequest;
 import app.aniMonster.business.domain.character.model.CharacterRequest;
 import app.aniMonster.business.domain.character.model.CharacterResponse;
 import app.aniMonster.business.logic.encrypt.DbEncryptUtil;
@@ -36,6 +37,26 @@ public class CharacterConvertor {
                             .isActivate(CharacterIsActivate.ACTIVATED)
                             .creationId(encryptUtil.encryptEncode("Not Set"))
                             .registeredAt(Instant.now())
+                            .description(it.getDescription())
+                            .prompt(it.getPrompt())
+                            .build();
+                })
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT, "CharacterRequest is Null"));
+
+    }
+
+    public CharacterEntity toEntity(CharacterModifyRequest characterModifyRequest) {
+        return Optional.ofNullable(characterModifyRequest)
+                .map(it -> {
+                    return CharacterEntity.builder()
+                            .id(it.getId())
+                            .name(it.getName())
+                            .nameKor(it.getName_kor())
+                            .gender(it.getGender())
+                            .age(it.getAge())
+                            .nationality(it.getNationality())
+                            .personality(it.getPersonality())
+                            .isActivate(it.getIs_activate())
                             .description(it.getDescription())
                             .prompt(it.getPrompt())
                             .build();

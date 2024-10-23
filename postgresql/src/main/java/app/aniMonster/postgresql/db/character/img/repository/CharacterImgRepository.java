@@ -10,4 +10,5 @@ import java.util.UUID;
 
 public interface CharacterImgRepository extends JpaRepository<CharacterImgEntity, String> {
     List<CharacterImgEntity> findAllByCharacterIdAndIsActivate(UUID id, CharacterImgIsActivate isActivate);
+    List<CharacterImgEntity> findAllByCharacterId(UUID characterId);
 }

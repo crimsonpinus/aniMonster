@@ -4,6 +4,7 @@ import app.aniMonster.business.common.annotation.Converter;
 import app.aniMonster.business.common.error.BusinessErrorCode;
 import app.aniMonster.business.common.exception.BusinessException;
 import app.aniMonster.business.domain.file.model.FileFindRequest;
+import app.aniMonster.business.domain.file.model.FileModifyRequest;
 import app.aniMonster.business.domain.file.model.FileRequest;
 import app.aniMonster.business.domain.file.model.FileResponse;
 import app.aniMonster.business.domain.social.business.SocialBusiness;
@@ -55,6 +56,18 @@ public class FileConvertor {
                 })
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT, "FileDeactivateRequest is Null"));
     }
+
+    public FileEntity toEntity(FileModifyRequest request) {
+        return Optional.ofNullable(request)
+                .map(it -> {
+                    return FileEntity.builder()
+                            .fileId(it.getFile_id())
+                            .isActivate(it.getIs_activate())
+                            .build();
+                })
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT, "FileModifyRequest is Null"));
+    }
+
 
 
     public FileResponse toResponsse(FileEntity fileEntity) {

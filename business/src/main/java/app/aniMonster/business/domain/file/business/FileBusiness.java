@@ -5,6 +5,7 @@ import app.aniMonster.business.common.error.BusinessErrorCode;
 import app.aniMonster.business.common.exception.BusinessException;
 import app.aniMonster.business.domain.file.convertor.FileConvertor;
 import app.aniMonster.business.domain.file.model.FileFindRequest;
+import app.aniMonster.business.domain.file.model.FileModifyRequest;
 import app.aniMonster.business.domain.file.model.FileRequest;
 import app.aniMonster.business.domain.file.model.FileResponse;
 import app.aniMonster.business.domain.file.service.FileService;
@@ -69,6 +70,14 @@ public class FileBusiness {
 
     }
 
+    public FileResponse activationSwitch(FileModifyRequest request) {
+        var entity = fileConvertor.toEntity(request);
+        var usedEntity = fileService.activationSwitch(entity);
+
+        return fileConvertor.toResponsse(usedEntity);
+
+    }
+
     //파일 저장
     private void saveFile(FileEntity entity, MultipartFile file) {
         //폴더 확인 및 생성
@@ -84,6 +93,5 @@ public class FileBusiness {
             throw new BusinessException(BusinessErrorCode.SERVER_ERROR,"File Save Error",e);
         }
     }
-
 
 }

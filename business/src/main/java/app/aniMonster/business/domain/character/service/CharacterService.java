@@ -18,7 +18,6 @@ import java.util.UUID;
 public class CharacterService {
 
     private final CharacterRepository characterRepository;
-    private final CharacterImgRepository characterImgRepository;
 
     @Transactional
     public CharacterEntity save(CharacterEntity characterEntity) {
@@ -26,8 +25,8 @@ public class CharacterService {
     }
 
 
-    public List<CharacterEntity> findAll() {
-        return characterRepository.findAllByIsActivate(CharacterIsActivate.ACTIVATED);
+    public List<CharacterEntity> findAll(CharacterIsActivate activate) {
+        return characterRepository.findAllByIsActivate(activate);
     }
 
     public CharacterEntity findByName(String name) {
@@ -38,5 +37,41 @@ public class CharacterService {
     public CharacterEntity findById(UUID id) {
         return characterRepository.findFirstByIdAndIsActivate(id, CharacterIsActivate.ACTIVATED)
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Id " + id + " not found"));
+    }
+
+    @Transactional
+    public CharacterEntity modifyById(CharacterEntity entity) {
+        var characterEntityCheck = characterRepository.findFirstById(entity.getId())
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Id " + entity.getId() + " not found"));
+
+        if(entity.getName() != null) {
+            characterEntityCheck.setName(entity.getName());
+        }
+        if(entity.getNameKor() != null) {
+            characterEntityCheck.setNameKor(entity.getNameKor());
+        }
+        if(entity.getGender() != null) {
+            characterEntityCheck.setGender(entity.getGender());
+        }
+        if(entity.getAge() != null) {
+            characterEntityCheck.setAge(entity.getAge());
+        }
+        if(entity.getNationality() != null) {
+            characterEntityCheck.setNationality(entity.getNationality());
+        }
+        if(entity.getPersonality() != null) {
+            characterEntityCheck.setPersonality(entity.getPersonality());
+        }
+        if(entity.getIsActivate() != null) {
+            characterEntityCheck.setIsActivate(entity.getIsActivate());
+        }
+        if(entity.getDescription() != null) {
+            characterEntityCheck.setDescription(entity.getDescription());
+        }
+        if(entity.getPrompt() != null) {
+            characterEntityCheck.setPrompt(entity.getPrompt());
+        }
+
+        return characterEntityCheck;
     }
 }

@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface FileRepository extends JpaRepository<FileEntity, Long> {
     Optional<FileEntity> findFirstByFileIdAndIsActivateOrderByIdDesc(String fileId, FileIsActivate isActivate);
+    Optional<FileEntity> findFirstByFileIdOrderByIdDesc(String fileId);
 }

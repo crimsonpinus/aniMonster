@@ -5,8 +5,7 @@ package app.aniMonster.business.domain.character.img.converter;
 import app.aniMonster.business.common.annotation.Converter;
 import app.aniMonster.business.common.error.BusinessErrorCode;
 import app.aniMonster.business.common.exception.BusinessException;
-import app.aniMonster.business.domain.character.img.model.CharacterImgResponse;
-import app.aniMonster.business.domain.character.img.model.CharacterImgSingleResponse;
+import app.aniMonster.business.domain.character.img.model.*;
 import app.aniMonster.business.domain.file.model.FileResponse;
 import app.aniMonster.postgresql.db.character.entity.CharacterEntity;
 import app.aniMonster.postgresql.db.character.img.entity.CharacterImgEntity;
@@ -41,6 +40,18 @@ public class CharacterImgConvertor {
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"CharacterEntity is null"));
 
     }
+
+    public CharacterImgEntity toEntity(CharacterImgInfo characterImgInfo) {
+        return Optional.ofNullable(characterImgInfo)
+                .map(it -> {
+                    return CharacterImgEntity.builder()
+                            .id(it.getId())
+                            .isActivate(it.getIs_activate())
+                            .build();
+                })
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"CharacterImgInfo is null"));
+    }
+
     public CharacterImgSingleResponse toResponse(CharacterImgEntity characterImgEntity) {
         return Optional.ofNullable(characterImgEntity)
                 .map(it -> {
@@ -82,5 +93,38 @@ public class CharacterImgConvertor {
         response.setAlbum_img(album_img);
 
         return response;
+    }
+
+    public CharacterImgResponseAll toResponseAll(List<CharacterImgEntity> characterImgEntity) {
+        List<CharacterImgSingleResponse> thumbnail_img = new ArrayList<>();
+        List<CharacterImgSingleResponse> character_img = new ArrayList<>();
+        List<CharacterImgSingleResponse> background_img = new ArrayList<>();
+        List<CharacterImgSingleResponse> album_img = new ArrayList<>();
+
+        characterImgEntity.forEach(it -> {
+            var singleResponse = toResponse(it);
+
+            switch (singleResponse.getCategory()) {
+                case THUMBNAIL -> {
+                    thumbnail_img.add(singleResponse);
+                }
+                case CHARACTER -> {
+                    character_img.add(singleResponse);
+                }
+                case BACKGROUND -> {
+                    background_img.add(singleResponse);
+                }
+                case ALBUM -> {
+                    album_img.add(singleResponse);
+                }
+            }
+
+        });
+        return CharacterImgResponseAll.builder()
+                .thumbnail_img(thumbnail_img)
+                .character_img(character_img)
+                .background_img(background_img)
+                .album_img(album_img)
+                .build();
     }
 }

@@ -4,12 +4,10 @@ import app.aniMonster.business.common.annotation.Business;
 import app.aniMonster.business.domain.character.converter.CharacterConvertor;
 import app.aniMonster.business.domain.character.img.business.CharacterImgBusiness;
 import app.aniMonster.business.domain.character.img.model.CharacterImgRequest;
-import app.aniMonster.business.domain.character.model.CharacterIdRequest;
-import app.aniMonster.business.domain.character.model.CharacterNameRequest;
-import app.aniMonster.business.domain.character.model.CharacterRequest;
-import app.aniMonster.business.domain.character.model.CharacterResponse;
+import app.aniMonster.business.domain.character.model.*;
 import app.aniMonster.business.domain.character.service.CharacterService;
 import app.aniMonster.postgresql.db.character.entity.CharacterEntity;
+import app.aniMonster.postgresql.db.character.enums.CharacterIsActivate;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
@@ -34,8 +32,9 @@ public class CharacterBusiness {
         return response;
     }
 
-    public List<CharacterResponse> findAll() {
-        var usedEntity = characterService.findAll();
+    public List<CharacterResponse> findAll(Boolean active) {
+        var isActive = active ? CharacterIsActivate.ACTIVATED : CharacterIsActivate.DEACTIVATED;
+        var usedEntity = characterService.findAll(isActive);
 
 
         List<CharacterResponse> characterResponses = new ArrayList<>();
@@ -58,10 +57,23 @@ public class CharacterBusiness {
         return findImgAndToResponse(usedEntity);
     }
 
+    public CharacterResponse modifyById(CharacterModifyRequest characterModifyRequest) {
+        var entity = characterConvertor.toEntity(characterModifyRequest);
+        var usedEntity = characterService.modifyById(entity);
+        return findImgAndToResponse(usedEntity);
+    }
+
+
+    /**
+     *
+     * @param entity
+     * @return
+     */
     private CharacterResponse findImgAndToResponse(CharacterEntity entity) {
         var imgResponse = characterImgBusiness.findByCharacterId(entity.getId());
         return characterConvertor.toResponse(entity, imgResponse);
     }
+
 
 
 }

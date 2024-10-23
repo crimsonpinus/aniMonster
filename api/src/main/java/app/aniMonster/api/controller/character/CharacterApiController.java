@@ -4,10 +4,7 @@ import app.aniMonster.api.common.api.Api;
 import app.aniMonster.api.controller.social.Social;
 import app.aniMonster.business.domain.character.business.CharacterBusiness;
 import app.aniMonster.business.domain.character.img.model.CharacterImgRequest;
-import app.aniMonster.business.domain.character.model.CharacterIdRequest;
-import app.aniMonster.business.domain.character.model.CharacterNameRequest;
-import app.aniMonster.business.domain.character.model.CharacterRequest;
-import app.aniMonster.business.domain.character.model.CharacterResponse;
+import app.aniMonster.business.domain.character.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -84,12 +81,29 @@ public class CharacterApiController {
     @Operation(
             summary = "등록된 모든 캐릭터를 보여줌(활성된 캐릭터만 나옴) "
     )
-    @PostMapping("/find/all")
+    @PostMapping("/find/all/activate")
     public Api<List<CharacterResponse>> findAll(
             @Valid
             @RequestBody Api<String> request
     ){
-        var response = characterBusiness.findAll();
+        var response = characterBusiness.findAll(true);
+        return social.withToken(response, request.getResult());
+    }
+
+    /**
+     *
+     * @param request
+     * @return
+     */
+    @Operation(
+            summary = "등록된 모든 캐릭터를 보여줌(활성된 캐릭터만 나옴) "
+    )
+    @PostMapping("/find/all/deactivate")
+    public Api<List<CharacterResponse>> findAllDeactivate(
+            @Valid
+            @RequestBody Api<String> request
+    ){
+        var response = characterBusiness.findAll(false);
         return social.withToken(response, request.getResult());
     }
 
@@ -124,6 +138,34 @@ public class CharacterApiController {
             @RequestBody Api<CharacterIdRequest> request
     ) {
         var response = characterBusiness.findById(request.getBody());
+        return social.withToken(response, request.getResult());
+    }
+
+    /**
+     *
+     * @param request
+     * @return
+     */
+    @Operation(
+            summary = "캐릭터 정보 수정",
+            description = """
+                    id를 이용하여 나머지 정보 수정 \n
+                        name -> 영문이름 \n
+                        name_kor -> 한글이름 \n
+                        gender -> MALE, FEMALE, NOT_SET \n
+                        age -> 나이 \n
+                        nationality -> 국적 \n
+                        personality -> 성격(친절, 활발, 어두움...) \n
+                        description -> 캐릭터 설명 \n
+                        prompt -> System Prompt \n
+                    """
+    )
+    @PostMapping("/modify/id")
+    public Api<CharacterResponse> modifyById(
+            @Valid
+            @RequestBody Api<CharacterModifyRequest> request
+    ) {
+        var response = characterBusiness.modifyById(request.getBody());
         return social.withToken(response, request.getResult());
     }
 }

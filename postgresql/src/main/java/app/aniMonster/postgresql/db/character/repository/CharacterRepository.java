@@ -12,5 +12,6 @@ public interface CharacterRepository extends JpaRepository<CharacterEntity, Stri
     List<CharacterEntity> findAllByIsActivate(CharacterIsActivate isActivate);
     Optional<CharacterEntity> findFirstByNameAndIsActivate(String name, CharacterIsActivate isActivate);
     Optional<CharacterEntity> findFirstByIdAndIsActivate(UUID id, CharacterIsActivate isActivate);
+    Optional<CharacterEntity> findFirstById(UUID id);
 
 }
