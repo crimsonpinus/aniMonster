@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JpaBuddyIdeaProjectConfig">
-    <option name="reLastEntityCreationPackage" value="postgresql/src/main/java/app/aniMonster/postgresql/db/character/entity" />
+    <option name="reLastEntityCreationPackage" value="postgresql/src/main/java/app/aniMonster/postgresql/db/admin/entity" />
     <option name="reverseEngineeringLastDbConnectionId" value="0b5f363d-6bfd-4b37-85a2-993d1bf1077d__animon_public" />
   </component>
 </project>

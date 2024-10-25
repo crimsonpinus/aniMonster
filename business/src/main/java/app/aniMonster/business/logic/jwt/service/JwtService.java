@@ -10,6 +10,7 @@ import app.aniMonster.postgresql.db.social.enums.SocialStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -27,14 +28,27 @@ public class JwtService {
         return tokenHelperIfs.issueRefreshToken(data);
     }
 
-    public String validateToken(String token) {
+    public TokenModel issueAdminToken(Map<String, Object> data) { return tokenHelperIfs.issueAdminToken(data); }
+
+    public Map<String, String> validateToken(String token) {
         var map = tokenHelperIfs.validationTokenWithThrow(token);
         var id = map.get("social_id");
 
+        var adminId = map.get("admin_id");
+        if (adminId != null) {
+            id = "ADMIN_ADMINISTRATOR";
+        } else {
+            adminId = "ADMIN_USER";
+        }
         Objects.requireNonNull(id, ()->{
-            throw new BusinessException(BusinessErrorCode.NULL_POINT,"Invalid token");
+            throw new BusinessException(BusinessErrorCode.NULL_POINT,"Invalid token id");
         });
-        return id.toString();
+
+        var idInfo = new HashMap<String, String>();
+        idInfo.put("id", id.toString());
+        idInfo.put("adminId", adminId.toString());
+        System.out.println(idInfo.get("id"));
+        return idInfo;
     }
 
     public SocialSignResponse validateRefreshToken(String token) {

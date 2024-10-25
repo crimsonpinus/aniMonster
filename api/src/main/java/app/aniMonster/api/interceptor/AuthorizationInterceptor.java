@@ -54,8 +54,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             throw new ApiException(TokenErrorCode.AUTHORIZATION_TOKEN_NOT_FOUND);
         }
 
-        var socialId = jwtBusiness.validateToken(accessToken);
-        if (socialId != null) {
+        var idMap = jwtBusiness.validateToken(accessToken);
+        if (idMap != null) {
             var requestContext = Objects.requireNonNull(RequestContextHolder.getRequestAttributes());
             //어디서나 아래의 형식을 사용하여 호출하여 사용 가능
             //ex
@@ -65,9 +65,13 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 //            var socialId = requestContext.getAttribute("socialId", RequestAttributes.SCOPE_REQUEST);
 
 
-            requestContext.setAttribute("socialId" , socialId, RequestAttributes.SCOPE_REQUEST);
+            requestContext.setAttribute("socialId" , idMap.get("id"), RequestAttributes.SCOPE_REQUEST);
+            requestContext.setAttribute("adminId" , idMap.get("adminId"), RequestAttributes.SCOPE_REQUEST);
             return true;
         }
+
+
+
 
         throw new ApiException(ErrorCode.BAD_REQUEST, "토큰 인증 실패");
         /* return false; */

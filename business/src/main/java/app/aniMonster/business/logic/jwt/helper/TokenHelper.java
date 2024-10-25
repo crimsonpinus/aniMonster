@@ -28,6 +28,8 @@ public class TokenHelper implements TokenHelperIfs{
     @Value("${jwt.refresh-token.plus-hour}")
     private Long refreshTokenHour;
 
+    private final Long ADMIN_TOKEN_HOUR = 8L;
+
     @Override
     public TokenModel issueAccessToken(Map<String, Object> data) {
         return makeToken(data, accessTokenHour);
@@ -36,6 +38,11 @@ public class TokenHelper implements TokenHelperIfs{
     @Override
     public TokenModel issueRefreshToken(Map<String, Object> data) {
         return makeToken(data, refreshTokenHour);
+    }
+
+    @Override
+    public TokenModel issueAdminToken(Map<String, Object> data) {
+        return makeToken(data, ADMIN_TOKEN_HOUR);
     }
 
     @Override

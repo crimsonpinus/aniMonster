@@ -10,7 +10,8 @@ import lombok.Getter;
 @Getter
 public enum UserErrorCode implements ErrorCodeInterface {
 
-    USER_NOT_FOUND(400, 1404, "사용자을 찾을 수 없음")
+    USER_NOT_FOUND(400, 1404, "사용자을 찾을 수 없음"),
+    USER_AUTH_ERROR(400, 1405, "관리자 권한 필요")
 
             ;
 

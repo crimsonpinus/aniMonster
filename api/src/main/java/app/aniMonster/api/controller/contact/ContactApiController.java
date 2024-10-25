@@ -1,7 +1,11 @@
 package app.aniMonster.api.controller.contact;
 
 import app.aniMonster.api.common.api.Api;
+import app.aniMonster.api.common.error.UserErrorCode;
+import app.aniMonster.api.common.exception.ApiException;
 import app.aniMonster.api.controller.social.Social;
+import app.aniMonster.business.common.error.BusinessErrorCode;
+import app.aniMonster.business.common.exception.BusinessException;
 import app.aniMonster.business.domain.contact.business.ContactBusiness;
 import app.aniMonster.business.domain.contact.model.ContactAdminRequest;
 import app.aniMonster.business.domain.contact.model.ContactConsumerRequest;
@@ -77,13 +81,16 @@ public class ContactApiController {
             summary = "관리자 응답 달지 않은 글 검색",
             description = """
                     최신순으로 정렬되어 보여짐
+                    관리자로 접속시에만 접근 가능
                     """
     )
-    @PostMapping("/findReply")
+    @PostMapping("/find/reply")
     public Api<List<ContactResponse>> findReply(
             @Valid
             @RequestBody Api<String> request
     ){
+        social.getAdminId();
+
         var response = contactBusiness.findReply();
 
         return social.withToken(response, request.getResult());
@@ -98,7 +105,7 @@ public class ContactApiController {
     @Operation(
             summary = "문의사항 답변",
             description = """
-                    admin_id는 "API_ADMIN"으로 입력됩 -> admin관련 회의후 향후 방식 결정\n
+                    관리자로 접속시에만 작동\n
                     """
     )
     @PostMapping("/reply")
@@ -106,7 +113,8 @@ public class ContactApiController {
             @Valid
             @RequestBody Api<ContactAdminRequest> request
     ) {
-        var response = contactBusiness.reply(request.getBody(), "API_ADMIN");
+        var adminId = social.getAdminId();
+        var response = contactBusiness.reply(request.getBody(), adminId);
 
         return social.withToken(response, request.getResult());
     }

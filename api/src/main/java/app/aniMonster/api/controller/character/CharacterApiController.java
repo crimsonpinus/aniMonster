@@ -68,6 +68,7 @@ public class CharacterApiController {
                 .album(album)
                 .build();
 
+        social.getAdminId();
         var response = characterBusiness.save(request.getBody(), imgRequest);
         return social.withToken(response, request.getResult());
     }
@@ -86,6 +87,7 @@ public class CharacterApiController {
             @Valid
             @RequestBody Api<String> request
     ){
+        social.getAdminId();
         var response = characterBusiness.findAll(true);
         return social.withToken(response, request.getResult());
     }
@@ -103,6 +105,7 @@ public class CharacterApiController {
             @Valid
             @RequestBody Api<String> request
     ){
+        social.getAdminId();
         var response = characterBusiness.findAll(false);
         return social.withToken(response, request.getResult());
     }
@@ -120,6 +123,7 @@ public class CharacterApiController {
             @Valid
             @RequestBody Api<CharacterNameRequest> request
     ) {
+        social.getAdminId();
         var response = characterBusiness.findByName(request.getBody());
         return social.withToken(response, request.getResult());
     }
@@ -137,6 +141,7 @@ public class CharacterApiController {
             @Valid
             @RequestBody Api<CharacterIdRequest> request
     ) {
+        social.getAdminId();
         var response = characterBusiness.findById(request.getBody());
         return social.withToken(response, request.getResult());
     }
@@ -165,6 +170,7 @@ public class CharacterApiController {
             @Valid
             @RequestBody Api<CharacterModifyRequest> request
     ) {
+        social.getAdminId();
         var response = characterBusiness.modifyById(request.getBody());
         return social.withToken(response, request.getResult());
     }

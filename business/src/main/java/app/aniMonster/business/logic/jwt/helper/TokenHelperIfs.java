@@ -11,5 +11,7 @@ public interface TokenHelperIfs {
 
     TokenModel issueRefreshToken(Map<String, Object> data);
 
+    TokenModel issueAdminToken(Map<String, Object> data);
+
     Map<String, Object> validationTokenWithThrow(String token);
 }

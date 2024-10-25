@@ -3,14 +3,17 @@ package app.aniMonster.business.logic.jwt.business;
 import app.aniMonster.business.common.annotation.Business;
 import app.aniMonster.business.common.error.BusinessErrorCode;
 import app.aniMonster.business.common.exception.BusinessException;
+import app.aniMonster.business.domain.admin.model.AdminResponse;
 import app.aniMonster.business.domain.social.model.SocialSignResponse;
 import app.aniMonster.business.logic.jwt.converter.JwtConvertor;
+import app.aniMonster.business.logic.jwt.model.JwtAdminResponse;
 import app.aniMonster.business.logic.jwt.model.JwtResponse;
 import app.aniMonster.business.logic.jwt.service.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -36,8 +39,27 @@ public class JwtBusiness {
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social Response is null"));
     }
 
-    public String validateToken(String token) {
-        return jwtService.validateToken(token);
+    public JwtAdminResponse issueToken(AdminResponse response) {
+        return Optional.ofNullable(response)
+                .map(it ->{
+
+                    var accessMapData = new HashMap<String, Object>();
+//                    accessMapData.put("social_id", it.getId());
+                    accessMapData.put("admin_id", it.getId());
+                    accessMapData.put("admin_author", it.getAdmin_author());
+
+                    var adminToken = jwtService.issueAdminToken(accessMapData);
+
+
+                    return jwtConvertor.toResponse(adminToken);
+                })
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"Social Response is null"));
+    }
+
+    public Map<String, String> validateToken(String token) {
+        var temp = jwtService.validateToken(token);
+        System.out.println(temp);
+        return temp;
     }
     public SocialSignResponse validateRefreshToken(String refreshToken) {
         return jwtService.validateRefreshToken(refreshToken);
