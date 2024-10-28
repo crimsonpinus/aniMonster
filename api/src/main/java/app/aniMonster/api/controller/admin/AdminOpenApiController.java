@@ -20,7 +20,7 @@ public class AdminOpenApiController {
     private final AdminBusiness adminBusiness;
 
     @Operation(
-            summary = "관리자 로그인"
+            summary = "***관리자*** 관리자 로그인"
     )
     @PostMapping("/login")
     public Api<JwtAdminResponse> login(

@@ -31,7 +31,7 @@ public class CharacterApiController {
      * @return
      */
     @Operation(
-            summary = "관리자 모드용 케릭터 저장",
+            summary = "***관리자*** 관리자 모드용 케릭터 저장",
             description = """
                     name -> 영문이름 \n
                     name_kor -> 한글이름 \n
@@ -73,22 +73,21 @@ public class CharacterApiController {
         return social.withToken(response, request.getResult());
     }
 
-
     /**
      *
      * @param request
      * @return
      */
     @Operation(
-            summary = "등록된 모든 캐릭터를 보여줌(활성된 캐릭터만 나옴) "
+            summary = "***관리자*** 모든 캐릭터 리스트"
     )
-    @PostMapping("/find/all/activate")
-    public Api<List<CharacterResponse>> findAll(
+    @PostMapping("/find/all")
+    public Api<CharacterAllResponse> findAll(
             @Valid
             @RequestBody Api<String> request
-    ){
+    ) {
         social.getAdminId();
-        var response = characterBusiness.findAll(true);
+        var response = characterBusiness.findAll();
         return social.withToken(response, request.getResult());
     }
 
@@ -98,7 +97,24 @@ public class CharacterApiController {
      * @return
      */
     @Operation(
-            summary = "등록된 모든 캐릭터를 보여줌(활성된 캐릭터만 나옴) "
+            summary = "활성화 된 캐릭터 리스트 "
+    )
+    @PostMapping("/find/all/activate")
+    public Api<List<CharacterResponse>> findAllActivate(
+            @Valid
+            @RequestBody Api<String> request
+    ){
+        var response = characterBusiness.findAllByIsActivate(true);
+        return social.withToken(response, request.getResult());
+    }
+
+    /**
+     *
+     * @param request
+     * @return
+     */
+    @Operation(
+            summary = "***관리자*** 비활성화 된 캐릭터 리스트 "
     )
     @PostMapping("/find/all/deactivate")
     public Api<List<CharacterResponse>> findAllDeactivate(
@@ -106,7 +122,7 @@ public class CharacterApiController {
             @RequestBody Api<String> request
     ){
         social.getAdminId();
-        var response = characterBusiness.findAll(false);
+        var response = characterBusiness.findAllByIsActivate(false);
         return social.withToken(response, request.getResult());
     }
 

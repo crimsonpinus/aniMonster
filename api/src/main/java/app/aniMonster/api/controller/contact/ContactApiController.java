@@ -78,7 +78,7 @@ public class ContactApiController {
      * @return
      */
     @Operation(
-            summary = "관리자 응답 달지 않은 글 검색",
+            summary = "***관리자*** 관리자 응답 달지 않은 글 검색",
             description = """
                     최신순으로 정렬되어 보여짐
                     관리자로 접속시에만 접근 가능
@@ -103,7 +103,7 @@ public class ContactApiController {
      * @return
      */
     @Operation(
-            summary = "문의사항 답변",
+            summary = "***관리자*** 문의사항 답변",
             description = """
                     관리자로 접속시에만 작동\n
                     """

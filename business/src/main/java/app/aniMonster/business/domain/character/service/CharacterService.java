@@ -4,7 +4,6 @@ import app.aniMonster.business.common.error.BusinessErrorCode;
 import app.aniMonster.business.common.exception.BusinessException;
 import app.aniMonster.postgresql.db.character.entity.CharacterEntity;
 import app.aniMonster.postgresql.db.character.enums.CharacterIsActivate;
-import app.aniMonster.postgresql.db.character.img.repository.CharacterImgRepository;
 import app.aniMonster.postgresql.db.character.repository.CharacterRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,11 @@ public class CharacterService {
     }
 
 
-    public List<CharacterEntity> findAll(CharacterIsActivate activate) {
+    public List<CharacterEntity> findAll() {
+        return characterRepository.findAll();
+    }
+
+    public List<CharacterEntity> findAllByIsActivate(CharacterIsActivate activate) {
         return characterRepository.findAllByIsActivate(activate);
     }
 

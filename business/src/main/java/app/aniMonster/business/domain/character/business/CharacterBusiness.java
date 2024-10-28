@@ -8,7 +8,6 @@ import app.aniMonster.business.domain.character.model.*;
 import app.aniMonster.business.domain.character.service.CharacterService;
 import app.aniMonster.postgresql.db.character.entity.CharacterEntity;
 import app.aniMonster.postgresql.db.character.enums.CharacterIsActivate;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -32,18 +31,29 @@ public class CharacterBusiness {
         return response;
     }
 
-    public List<CharacterResponse> findAll(Boolean active) {
+    public CharacterAllResponse findAll(){
+        var usedEntity = characterService.findAll();
+        var activateEntity = usedEntity.stream()
+                .filter(it -> it.getIsActivate().equals(CharacterIsActivate.ACTIVATED))
+                .toList();
+        var deactivateEntity = usedEntity.stream()
+                .filter(it -> it.getIsActivate().equals(CharacterIsActivate.DEACTIVATED))
+                .toList();
+
+        var activateResponse = toResponses(activateEntity);
+        var deactivateResponse = toResponses(deactivateEntity);
+
+        return CharacterAllResponse.builder()
+                .activate(activateResponse)
+                .deactivate(deactivateResponse)
+                .build();
+    }
+
+    public List<CharacterResponse> findAllByIsActivate(Boolean active) {
         var isActive = active ? CharacterIsActivate.ACTIVATED : CharacterIsActivate.DEACTIVATED;
-        var usedEntity = characterService.findAll(isActive);
+        var usedEntity = characterService.findAllByIsActivate(isActive);
 
-
-        List<CharacterResponse> characterResponses = new ArrayList<>();
-        usedEntity.forEach(entity -> {
-            var response = findImgAndToResponse(entity);
-            characterResponses.add(response);
-        });
-
-        return characterResponses;
+        return toResponses(usedEntity);
     }
 
     public CharacterResponse findByName(CharacterNameRequest characterNameRequest) {
@@ -74,6 +84,13 @@ public class CharacterBusiness {
         return characterConvertor.toResponse(entity, imgResponse);
     }
 
-
+    private List<CharacterResponse> toResponses(List<CharacterEntity> entities) {
+        List<CharacterResponse> characterResponses = new ArrayList<>();
+        entities.forEach(entity -> {
+            var response = findImgAndToResponse(entity);
+            characterResponses.add(response);
+        });
+        return characterResponses;
+    }
 
     }
