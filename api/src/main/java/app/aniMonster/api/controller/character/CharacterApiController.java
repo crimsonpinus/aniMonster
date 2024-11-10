@@ -58,7 +58,7 @@ public class CharacterApiController {
             @RequestPart Api<CharacterRequest> request,
             @RequestPart MultipartFile thumbnail,
             @RequestPart List<MultipartFile> character,
-            @RequestPart MultipartFile background,
+            @RequestPart List<MultipartFile> background,
             @RequestPart List<MultipartFile> album
     ) {
         var imgRequest = CharacterImgRequest.builder()

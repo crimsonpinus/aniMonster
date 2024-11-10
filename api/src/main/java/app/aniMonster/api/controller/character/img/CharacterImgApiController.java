@@ -39,6 +39,7 @@ public class CharacterImgApiController {
                     character_img_info_list는 tbl_character_img 관련 정보 리스트가 담겨져 있음 \n
                         id -> id
                         is_activate -> ACTIVATED, DEACTIVATED
+                        is_selected -> SELECTED, UNSELECTED (backround img에서 선택된 이미지 설정, 다른 카테고리에선 현재 새용 불필요)
                         
                         변경할 것이 없고 파일만 업로드 시 []로보내면 됨
                     """
@@ -52,7 +53,7 @@ public class CharacterImgApiController {
             @RequestPart Api<CharacterImgModifyRequset> request,
             @RequestPart(required = false) MultipartFile thumbnail,
             @RequestPart(required = false) List<MultipartFile> character,
-            @RequestPart(required = false) MultipartFile background,
+            @RequestPart(required = false) List<MultipartFile> background,
             @RequestPart(required = false) List<MultipartFile> album
     ) {
         var imgRequest = CharacterImgRequest.builder()

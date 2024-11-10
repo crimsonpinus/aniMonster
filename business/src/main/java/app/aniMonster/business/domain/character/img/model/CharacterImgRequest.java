@@ -22,7 +22,7 @@ public class CharacterImgRequest {
     public List<MultipartFile> character;
 
     @NotBlank
-    public MultipartFile background;
+    public List<MultipartFile> background;
 
     @NotBlank
     public List<MultipartFile> album;

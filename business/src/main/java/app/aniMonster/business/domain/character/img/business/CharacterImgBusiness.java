@@ -14,6 +14,7 @@ import app.aniMonster.postgresql.db.character.entity.CharacterEntity;
 import app.aniMonster.postgresql.db.character.img.entity.CharacterImgEntity;
 import app.aniMonster.postgresql.db.character.img.enums.CharacterImgCategory;
 import app.aniMonster.postgresql.db.character.img.enums.CharacterImgIsActivate;
+import app.aniMonster.postgresql.db.character.img.enums.CharacterImgIsSelected;
 import app.aniMonster.postgresql.db.file.enums.FileCategory;
 import app.aniMonster.postgresql.db.file.enums.FileIsActivate;
 import lombok.RequiredArgsConstructor;
@@ -130,10 +131,18 @@ public class CharacterImgBusiness {
 
         if (characterImgRequest.getBackground() != null) {
             var fileResponse = fileBusiness.upload(fileRequest, characterImgRequest.getBackground());
-            var entity = characterImgConvertor.toEntity(character, fileResponse, CharacterImgCategory.BACKGROUND);
-            var usedEntity = characterImgService.save(entity);
+            boolean isFirstFile = true;
+            List<CharacterImgSingleResponse> resp = new ArrayList<>();
+            for (var fileRes : fileResponse) {
+                var entity = isFirstFile
+                        ? characterImgConvertor.toEntity(character, fileRes, CharacterImgCategory.BACKGROUND, CharacterImgIsSelected.SELECTED)
+                        : characterImgConvertor.toEntity(character, fileRes, CharacterImgCategory.BACKGROUND);
 
-            characterImgEntities.add(usedEntity);
+                isFirstFile = false;
+
+                var usedEntity = characterImgService.save(entity);
+                characterImgEntities.add(usedEntity);
+            }
         }
 
         if (characterImgRequest.getAlbum() != null) {

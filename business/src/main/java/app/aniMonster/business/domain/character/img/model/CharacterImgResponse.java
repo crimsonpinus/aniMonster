@@ -12,7 +12,7 @@ import java.util.List;
 public class CharacterImgResponse {
     public CharacterImgSingleResponse thumbnail_img;
     public List<CharacterImgSingleResponse> character_img;
-    public CharacterImgSingleResponse background_img;
+    public List<CharacterImgSingleResponse> background_img;
     public List<CharacterImgSingleResponse> album_img;
 
 }

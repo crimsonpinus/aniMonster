@@ -38,6 +38,9 @@ public class CharacterImgService {
         if (entity.getIsActivate() != null) {
             characterImgEntityCheck.setIsActivate(entity.getIsActivate());
         }
+        if (entity.getIsSelected() != null) {
+            characterImgEntityCheck.setIsSelected(entity.getIsSelected());
+        }
         return characterImgEntityCheck;
     }
 

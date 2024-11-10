@@ -11,6 +11,7 @@ import app.aniMonster.postgresql.db.character.entity.CharacterEntity;
 import app.aniMonster.postgresql.db.character.img.entity.CharacterImgEntity;
 import app.aniMonster.postgresql.db.character.img.enums.CharacterImgCategory;
 import app.aniMonster.postgresql.db.character.img.enums.CharacterImgIsActivate;
+import app.aniMonster.postgresql.db.character.img.enums.CharacterImgIsSelected;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -33,6 +34,28 @@ public class CharacterImgConvertor {
                                         .category(category)
                                         .isActivate(CharacterImgIsActivate.ACTIVATED)
                                         .url(response.getUrl())
+                                        .isSelected(CharacterImgIsSelected.UNSELECTED)
+                                        .build();
+                            })
+                            .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"FileResponse is null"));
+                })
+                .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"CharacterEntity is null"));
+
+    }
+
+    public CharacterImgEntity toEntity(CharacterEntity characterEntity, FileResponse fileResponse, CharacterImgCategory category, CharacterImgIsSelected isSelected
+    ) {
+        return Optional.ofNullable(characterEntity)
+                .map(entity -> {
+                    return Optional.ofNullable(fileResponse)
+                            .map(response -> {
+                                return CharacterImgEntity.builder()
+                                        .id(response.getFile_id())
+                                        .characterId(entity.getId())
+                                        .category(category)
+                                        .isActivate(CharacterImgIsActivate.ACTIVATED)
+                                        .url(response.getUrl())
+                                        .isSelected(isSelected)
                                         .build();
                             })
                             .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"FileResponse is null"));
@@ -44,6 +67,13 @@ public class CharacterImgConvertor {
     public CharacterImgEntity toEntity(CharacterImgInfo characterImgInfo) {
         return Optional.ofNullable(characterImgInfo)
                 .map(it -> {
+                    if(characterImgInfo.getIs_selected() != null) {
+                        return CharacterImgEntity.builder()
+                                .id(it.getId())
+                                .isActivate(it.getIs_activate())
+                                .isSelected(it.getIs_selected())
+                                .build();
+                    }
                     return CharacterImgEntity.builder()
                             .id(it.getId())
                             .isActivate(it.getIs_activate())
@@ -59,6 +89,7 @@ public class CharacterImgConvertor {
                             .id(it.getId())
                             .category(it.getCategory())
                             .url(it.getUrl())
+                            .is_selected(it.getIsSelected())
                             .build();
                 })
                 .orElseThrow(() -> new BusinessException(BusinessErrorCode.NULL_POINT,"CharacterImgEntity is null"));
@@ -67,6 +98,7 @@ public class CharacterImgConvertor {
         var response = new CharacterImgResponse();
 
         List<CharacterImgSingleResponse> character_img = new ArrayList<>();
+        List<CharacterImgSingleResponse> background_img = new ArrayList<>();
         List<CharacterImgSingleResponse> album_img = new ArrayList<>();
 
         characterImgEntity.forEach(it -> {
@@ -80,7 +112,7 @@ public class CharacterImgConvertor {
                     character_img.add(singleResponse);
                 }
                 case BACKGROUND -> {
-                    response.setBackground_img(singleResponse);
+                    background_img.add(singleResponse);
                 }
                 case ALBUM -> {
                     album_img.add(singleResponse);
@@ -90,6 +122,7 @@ public class CharacterImgConvertor {
         });
 
         response.setCharacter_img(character_img);
+        response.setBackground_img(background_img);
         response.setAlbum_img(album_img);
 
         return response;

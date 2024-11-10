@@ -2,6 +2,7 @@ package app.aniMonster.postgresql.db.character.img.entity;
 
 import app.aniMonster.postgresql.db.character.img.enums.CharacterImgCategory;
 import app.aniMonster.postgresql.db.character.img.enums.CharacterImgIsActivate;
+import app.aniMonster.postgresql.db.character.img.enums.CharacterImgIsSelected;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -43,5 +44,10 @@ public class CharacterImgEntity {
     @NotNull
     @Column(name = "url", nullable = false, length = 300)
     private String url;
+
+    @Size(max = 20)
+    @Column(name = "is_selected", length = 20)
+    @Enumerated(EnumType.STRING)
+    private CharacterImgIsSelected isSelected;
 
 }
