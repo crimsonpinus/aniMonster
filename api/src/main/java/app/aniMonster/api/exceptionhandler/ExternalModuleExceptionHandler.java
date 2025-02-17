@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 @Order(value = Integer.MIN_VALUE)
+/**
+ * 외부모듈 예외 처리 로직
+ * 현재는 business관련 예외 처리
+ */
 public class ExternalModuleExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)

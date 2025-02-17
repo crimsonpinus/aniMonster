@@ -47,12 +47,15 @@ public class TokenHelper implements TokenHelperIfs{
 
     @Override
     public Map<String, Object> validationTokenWithThrow(String token) {
-        var key = Keys.hmacShaKeyFor(secretKey.getBytes());
 
+        // 비밀키로 HMAC-SHA 키 생성
+        var key = Keys.hmacShaKeyFor(secretKey.getBytes());
+        // JWT 파서 빌더 생성
         var parser = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build();
         try {
+            // 토큰 파싱 및 클레임 추출
             var result = parser.parseClaimsJws(token);
             return new HashMap<String, Object>(result.getBody());
         }catch (Exception e){
@@ -66,6 +69,12 @@ public class TokenHelper implements TokenHelperIfs{
         }
     }
 
+    /**
+     * 토큰생성 메서드
+     * @param data
+     * @param tokenHour
+     * @return
+     */
     public TokenModel makeToken(Map<String, Object> data, Long tokenHour){
         var expiredLocalDateTime = LocalDateTime.now()
                 .plusHours(tokenHour);
@@ -75,8 +84,11 @@ public class TokenHelper implements TokenHelperIfs{
                         ZoneId.systemDefault()
                 ).toInstant()
         );
+
+        // 비밀키로 HMAC-SHA 키 생성
         var key = Keys.hmacShaKeyFor(secretKey.getBytes());
 
+        // JWT 빌더를 사용하여 토큰 생성
         var jwtToken = Jwts.builder()
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setClaims(data)

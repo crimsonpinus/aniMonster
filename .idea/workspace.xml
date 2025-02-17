@@ -5,20 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e3cba7e-311f-4398-ac9b-8e1b5bfc2795" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/414ac8ca-3745-451c-b10b-7bf0e7b6cf57.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/414ac8ca-3745-451c-b10b-7bf0e7b6cf57.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/414ac8ca-3745-451c-b10b-7bf0e7b6cf57/storage_v2/_src_/database/animon.sI_Fqw/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/414ac8ca-3745-451c-b10b-7bf0e7b6cf57/storage_v2/_src_/database/animon.sI_Fqw/schema/public.abK9xQ.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/controller/character/CharacterApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/controller/character/CharacterApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/controller/character/img/CharacterImgApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/controller/character/img/CharacterImgApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/business/CharacterImgBusiness.java" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/business/CharacterImgBusiness.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/converter/CharacterImgConvertor.java" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/converter/CharacterImgConvertor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/model/CharacterImgInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/model/CharacterImgInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/model/CharacterImgRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/model/CharacterImgRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/model/CharacterImgResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/model/CharacterImgResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/model/CharacterImgSingleResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/model/CharacterImgSingleResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/service/CharacterImgService.java" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/domain/character/img/service/CharacterImgService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postgresql/src/main/java/app/aniMonster/postgresql/db/character/img/entity/CharacterImgEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql/src/main/java/app/aniMonster/postgresql/db/character/img/entity/CharacterImgEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/common/api/Result.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/common/api/Result.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/common/error/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/common/error/ErrorCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/common/exception/ApiException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/common/exception/ApiException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/config/objectmapper/ObjectMapperConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/config/objectmapper/ObjectMapperConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/config/swagger/MultipartJackson2HttpMessageConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/config/swagger/MultipartJackson2HttpMessageConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/exceptionhandler/ExternalModuleExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/exceptionhandler/ExternalModuleExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/filter/LoggerFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/filter/LoggerFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/interceptor/AuthorizationInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/app/aniMonster/api/interceptor/AuthorizationInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/logic/encrypt/NaverSMSEncryptUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/logic/jwt/business/JwtBusiness.java" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/logic/jwt/business/JwtBusiness.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/logic/jwt/helper/TokenHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/logic/jwt/helper/TokenHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/logic/jwt/service/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/logic/jwt/service/JwtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/resolver/SocialSessionResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/business/src/main/java/app/aniMonster/business/resolver/SocialSessionResolver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +126,10 @@
       <workItem from="1730025709723" duration="10108000" />
       <workItem from="1730035856395" duration="11741000" />
       <workItem from="1730206022217" duration="2649000" />
-      <workItem from="1730281914676" duration="14175000" />
+      <workItem from="1730281914676" duration="17533000" />
+      <workItem from="1731293015648" duration="602000" />
+      <workItem from="1736831106412" duration="8000" />
+      <workItem from="1739753326392" duration="9364000" />
     </task>
     <servers />
   </component>

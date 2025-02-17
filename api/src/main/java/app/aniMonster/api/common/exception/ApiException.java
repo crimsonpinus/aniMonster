@@ -6,6 +6,10 @@ import lombok.Getter;
 @Getter
 public class ApiException extends RuntimeException implements ErrorCodeInterface {
 
+    /**
+     * 응답시 에러가 있을때 사용
+     */
+
     private final ErrorCodeInterface errorCodeInterface;
 
     private final String errorDescription;

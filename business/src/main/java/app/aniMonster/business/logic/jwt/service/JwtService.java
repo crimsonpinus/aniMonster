@@ -30,16 +30,22 @@ public class JwtService {
 
     public TokenModel issueAdminToken(Map<String, Object> data) { return tokenHelperIfs.issueAdminToken(data); }
 
+    // 토큰 검증 및 사용자 정보 추출
     public Map<String, String> validateToken(String token) {
+        //토큰 검증 및 클레임 추출
         var map = tokenHelperIfs.validationTokenWithThrow(token);
-        var id = map.get("social_id");
 
+        var id = map.get("social_id");
         var adminId = map.get("admin_id");
+
+        // 관리자 토큰인 경우 처리
         if (adminId != null) {
             id = "ADMIN_ADMINISTRATOR";
         } else {
             adminId = "ADMIN_USER";
         }
+
+        // id 에외 처리
         Objects.requireNonNull(id, ()->{
             throw new BusinessException(BusinessErrorCode.NULL_POINT,"Invalid token id");
         });
@@ -51,8 +57,11 @@ public class JwtService {
         return idInfo;
     }
 
+    // 리프레시 토큰 검증 및 사용자 정보 추출
     public SocialSignResponse validateRefreshToken(String token) {
+        // 토큰 검증 및 클레임 추출
         var map = tokenHelperIfs.validationTokenWithThrow(token);
+
         var id = map.get("social_id").toString();
 
         var isAdult_str = map.get("is_adult").toString();
@@ -72,6 +81,7 @@ public class JwtService {
         }else{
             throw new BusinessException(BusinessErrorCode.NULL_POINT,"Invalid token");
         }
+
         return SocialSignResponse.builder()
                 .social_id(id)
                 .status(status)

@@ -13,6 +13,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Result {
 
+    /**
+     * 응답시 사용되는 구조체
+     */
     private Integer result_code;
 
     private String result_message;

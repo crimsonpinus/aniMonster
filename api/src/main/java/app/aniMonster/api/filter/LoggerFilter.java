@@ -10,6 +10,9 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.IOException;
 
+/**
+ * 로그 확인 부분
+ */
 @Slf4j
 @Component
 public class LoggerFilter implements Filter {

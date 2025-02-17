@@ -9,6 +9,10 @@ import java.lang.reflect.Type;
 
 @Component
 public class MultipartJackson2HttpMessageConverter extends AbstractJackson2HttpMessageConverter {
+    /**
+     * HttpMessageConverter 커스터 마이즈
+     * @param objectMapper
+     */
 
     public MultipartJackson2HttpMessageConverter(ObjectMapper objectMapper) {
         super(objectMapper, MediaType.APPLICATION_OCTET_STREAM);
